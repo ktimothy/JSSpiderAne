@@ -7,12 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8401AD9119F9FEBD00DA07B9 /* FlashRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8401AD9019F9FEBD00DA07B9 /* FlashRuntimeExtensions.h */; };
+		8401AD9319F9FEEF00DA07B9 /* Adobe AIR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AD9219F9FEEF00DA07B9 /* Adobe AIR.framework */; };
 		84ADA18C19F9FC3B00EA246E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84ADA18B19F9FC3B00EA246E /* Cocoa.framework */; };
 		84ADA19619F9FC3B00EA246E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84ADA19419F9FC3B00EA246E /* InfoPlist.strings */; };
 		84ADA19A19F9FC3B00EA246E /* JSSpiderANE.m in Sources */ = {isa = PBXBuildFile; fileRef = 84ADA19919F9FC3B00EA246E /* JSSpiderANE.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8401AD9019F9FEBD00DA07B9 /* FlashRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlashRuntimeExtensions.h; sourceTree = "<group>"; };
+		8401AD9219F9FEEF00DA07B9 /* Adobe AIR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "Adobe AIR.framework"; sourceTree = "<group>"; };
 		84ADA18819F9FC3B00EA246E /* JSSpiderANE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JSSpiderANE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84ADA18B19F9FC3B00EA246E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		84ADA18E19F9FC3B00EA246E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -31,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8401AD9319F9FEEF00DA07B9 /* Adobe AIR.framework in Frameworks */,
 				84ADA18C19F9FC3B00EA246E /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -58,6 +63,7 @@
 		84ADA18A19F9FC3B00EA246E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8401AD9219F9FEEF00DA07B9 /* Adobe AIR.framework */,
 				84ADA18B19F9FC3B00EA246E /* Cocoa.framework */,
 				84ADA1A019F9FC3B00EA246E /* XCTest.framework */,
 				84ADA18D19F9FC3B00EA246E /* Other Frameworks */,
@@ -78,6 +84,7 @@
 		84ADA19119F9FC3B00EA246E /* JSSpiderANE */ = {
 			isa = PBXGroup;
 			children = (
+				8401AD9019F9FEBD00DA07B9 /* FlashRuntimeExtensions.h */,
 				84ADA19819F9FC3B00EA246E /* JSSpiderANE.h */,
 				84ADA19919F9FC3B00EA246E /* JSSpiderANE.m */,
 				84ADA19219F9FC3B00EA246E /* Supporting Files */,
@@ -102,6 +109,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8401AD9119F9FEBD00DA07B9 /* FlashRuntimeExtensions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -190,10 +198,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -228,10 +237,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
@@ -262,6 +272,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSSpiderANE/JSSpiderANE-Prefix.pch";
@@ -277,6 +291,10 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSSpiderANE/JSSpiderANE-Prefix.pch";
