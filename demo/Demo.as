@@ -1,17 +1,76 @@
-package  {
-	
+﻿package  {
+
 	import flash.display.MovieClip;
+	import alegorium.JSSpiderANE;
 	import flash.events.Event;
-	
+
 	public class Demo extends MovieClip {
-		
+
 		public function Demo() {
 			// Чтобы не портить данные телеметрии, лучше запустить со второго фрейма
 			addEventListener(Event.ENTER_FRAME, demo);
-		}	
-		
+		}
+
 		public function demo(a) {
 			trace("Hello!");
+			trace(JSSpiderANE);
+			trace("isSupported: " + JSSpiderANE.isSupported);
+
+			var script:String =
+				'var exports = {};'
+				+'(function ($hx_exports) { "use strict";'
+				+'var Context = $hx_exports.Context = function() {'
+				+'};'
+
+				+'Context.main = function() {'
+				+'    Context.instance = new Context();'
+				+'};'
+
+				+'Context.prototype = {'
+				+'    command: function(param) {'
+				+'        return "command";'
+				+'    }'
+				+'    ,query: function(param) {'
+				+'        return "query";'
+				+'    }'
+
+				+'    ,demo: function(param) {'
+				+'         param.world = "Unicode: т!яы•…ђ";'
+				+'         return param;'
+				+'    }'
+				+'    ,bench: function(param) {'
+				+'        return param;'
+				+'    }'
+
+				+'};'
+				+'Context.main();'
+				+'})(typeof window != "undefined" ? window : exports);';
+
+			JSSpiderANE.setScript(script);
+
+			// Вызовем метод:
+			var met:String = "demo"; // Имя метода
+			var args:Object = {hello:"world-привет!яы•…ђіƒm‘'ѕѓ†ўџўz"}; // Параметры
+			var res:Object = JSSpiderANE.callScriptMethod(met, args); // Вызов и результат
+
+			// Результат уже обработан, и является объектом:
+			trace(res);
+			trace(JSON.stringify(res));
+			trace(res.hello);
+			trace(res.world);
+
+			// Проверим разные типы данных и кодировки:
+			var bench:String = "bench"; // Имя метода
+			trace(JSSpiderANE.callScriptMethod(bench, true) == true);
+			trace(JSSpiderANE.callScriptMethod(bench, 777) == 777);
+			trace(JSSpiderANE.callScriptMethod(bench, null) == null);
+			trace(JSSpiderANE.callScriptMethod(bench, "true") == "true");
+			trace(JSSpiderANE.callScriptMethod(bench, 0.5) == 0.5);
+			trace(JSSpiderANE.callScriptMethod(bench, [1,2,3]).length == 3);
+			trace(JSSpiderANE.callScriptMethod(bench, "привет") == "привет");
+			trace(JSSpiderANE.callScriptMethod(bench, "ПРЫВЕТЯ") == "ПРЫВЕТЯ");
+			trace(JSSpiderANE.callScriptMethod(bench, "ѕѓ†ўџўz") == "ѕѓ†ўџўz");
+			trace(JSSpiderANE.callScriptMethod(bench, "متن درج کریں") == "متن درج کریں");
 
 			benchCalls();
 			benchTraffic();
@@ -22,14 +81,25 @@ package  {
 
 		private function benchCalls(){
 			// Замер количества вызовов:
+			var bench:String = "bench"; // Имя метода
+			for(var i:int = 0; i < 1000; i++) JSSpiderANE.callScriptMethod(bench, null);
 		}
 
 		private function benchTraffic(){
 			// Замер скорости передачи голого траффика:
+			var bench:String = "bench"; // Имя метода
+			var data:String = longText;
+			trace(JSSpiderANE.callScriptMethod(bench, data).length == data.length); // Проверка на корректность
+			for(var k:int = 0; k < 1000; k++) JSSpiderANE.callScriptMethod(bench, data);
 		}
 
 		private function benchJson(){
 			// Замер скорости передачи сложных обьектов:
+			var bench:String = "bench"; // Имя метода
+			var j:Object = complexJSON;
+			// Проверка на корректность
+			trace(JSSpiderANE.callScriptMethod(bench, j).glossary.GlossDiv.title == j.glossary.GlossDiv.title);
+			for(var l:int = 0; l < 1000; l++) JSSpiderANE.callScriptMethod(bench, j);
 		}
 
 		private var longText:String = ''
