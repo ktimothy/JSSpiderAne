@@ -1,0 +1,1 @@
+Change configure.acompc and configure.adt with you paths!
