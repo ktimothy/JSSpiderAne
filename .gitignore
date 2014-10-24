@@ -26,3 +26,6 @@ demo/demo.fla
 demo/demo.swf
 demo/demo-app.xml
 AOTBuildOutput*
+projects/xcode/JSSpiderANE/Build*
+projects/xcode/JSSpiderANE/DerivedData*
+projects/xcode/JSSpiderANE/DerivedData/
