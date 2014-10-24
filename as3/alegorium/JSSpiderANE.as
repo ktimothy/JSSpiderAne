@@ -7,6 +7,7 @@ package alegorium
 	import flash.external.ExtensionContext;
 	import flash.external.ExternalInterface;
 	/**
+	 * Класс взаимодействия c JavaScript движком
 	 */
 	public class JSSpiderANE
 	{
@@ -47,6 +48,7 @@ package alegorium
 		 * инициализации скриптинга. Созданный в результате объект должен
 		 * существовать в глобальной области видимости (любой аналог window в
 		 * браузере) и не должен удаляться сборщиком мусора во время
+		 * существования контекста исполнения в JavaScript.
 		 *
 		 * @param script Код инициализации скриптинга
 		 */
@@ -77,6 +79,7 @@ package alegorium
 		};
 
 		/**
+		 * Очищает память расширения и выгружает движок JS в том числе
 		 */
 		public static function dispose():void {
 			if(ext == null) return ;
