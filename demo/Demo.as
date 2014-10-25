@@ -3,15 +3,33 @@
 	import flash.display.MovieClip;
 	import alegorium.JSSpiderANE;
 	import flash.events.Event;
+	import flash.events.UncaughtErrorEvent;
+	import flash.text.TextField;
+	import flash.utils.getTimer;
 
 	public class Demo extends MovieClip {
 
 		public function Demo() {
 			// Чтобы не портить данные телеметрии, лучше запустить со второго фрейма
 			addEventListener(Event.ENTER_FRAME, demo);
+			loaderInfo.uncaughtErrorEvents.addEventListener (
+                UncaughtErrorEvent.UNCAUGHT_ERROR, function(event:UncaughtErrorEvent)
+                {
+					text.appendText("\n"+event);
+					event.preventDefault();
+					event.stopImmediatePropagation();
+					event.stopPropagation();
+                }
+			);
+		}
+
+		public function trace(x:*)
+		{
+			text.appendText("\n"+x);
 		}
 
 		public function demo(a) {
+			removeEventListener(Event.ENTER_FRAME, demo);
 			trace("Hello!");
 			trace(JSSpiderANE);
 			trace("isSupported: " + JSSpiderANE.isSupported);
@@ -46,18 +64,43 @@
 				+'Context.main();'
 				+'})(typeof window != "undefined" ? window : exports);';
 
+			trace("pre...setScript before");
 			JSSpiderANE.setScript(script);
+			trace("pre...setScript after");
+
+			trace(JSSpiderANE.ext.call("call", "'exports: '+exports"));
+			trace(JSSpiderANE.ext.call("call", "'exports.Context: '+exports.Context"));
+			trace(JSSpiderANE.ext.call("call", "'window: '+window"));
+			trace(JSSpiderANE.ext.call("call", "'window.Context: '+window.Context"));
+			trace(JSSpiderANE.ext.call("call", "'window.Context.instance: '+window.Context.instance"));
+			trace(JSSpiderANE.ext.call("call", "'window.Context.instance.demo: '+window.Context.instance.demo"));
+
+			trace("ok...");
+
+			trace(JSSpiderANE.ext.call("call", "''+(23+1)"));
+
+			trace(JSSpiderANE.ext.call("call", "'{}:'+{}"));
+			trace(JSSpiderANE.ext.call("call", "'window: '+window"));
+			trace(JSSpiderANE.ext.call("call", "''+(window = {})"));
+			trace(JSSpiderANE.ext.call("call", "'window: '+window"));
+			trace(JSSpiderANE.ext.call("call", "''+(x = 7)"));
+			trace(JSSpiderANE.ext.call("call", "'x: '+x"));
+
+			trace(JSSpiderANE.ext.call("call", "var x = 7;"));
+			trace(JSSpiderANE.ext.call("call", "'x: '+x"));
 
 			// Вызовем метод:
 			var met:String = "demo"; // Имя метода
 			var args:Object = {hello:"world-привет!яы•…ђіƒm‘'ѕѓ†ўџўz"}; // Параметры
 			var res:Object = JSSpiderANE.callScriptMethod(met, args); // Вызов и результат
 
+			trace("ok...1");
 			// Результат уже обработан, и является объектом:
 			trace(res);
 			trace(JSON.stringify(res));
 			trace(res.hello);
 			trace(res.world);
+			trace("ok...2");
 
 			// Проверим разные типы данных и кодировки:
 			var bench:String = "bench"; // Имя метода
@@ -72,34 +115,41 @@
 			trace(JSSpiderANE.callScriptMethod(bench, "ѕѓ†ўџўz") == "ѕѓ†ўџўz");
 			trace(JSSpiderANE.callScriptMethod(bench, "متن درج کریں") == "متن درج کریں");
 
-			benchCalls();
-			benchTraffic();
-			benchJson();
-
-			stage.frameRate = 1;
-		}
-
-		private function benchCalls(){
-			// Замер количества вызовов:
-			var bench:String = "bench"; // Имя метода
-			for(var i:int = 0; i < 1000; i++) JSSpiderANE.callScriptMethod(bench, null);
-		}
-
-		private function benchTraffic(){
-			// Замер скорости передачи голого траффика:
-			var bench:String = "bench"; // Имя метода
+			// Проверка на корректность бенчмарка
 			var data:String = longText;
-			trace(JSSpiderANE.callScriptMethod(bench, data).length == data.length); // Проверка на корректность
-			for(var k:int = 0; k < 1000; k++) JSSpiderANE.callScriptMethod(bench, data);
-		}
+			if(JSSpiderANE.callScriptMethod(bench, data).length != data.length) trace("FAIL!");
 
-		private function benchJson(){
-			// Замер скорости передачи сложных обьектов:
-			var bench:String = "bench"; // Имя метода
 			var j:Object = complexJSON;
-			// Проверка на корректность
-			trace(JSSpiderANE.callScriptMethod(bench, j).glossary.GlossDiv.title == j.glossary.GlossDiv.title);
+			if(JSSpiderANE.callScriptMethod(bench, j).glossary.GlossDiv.title != j.glossary.GlossDiv.title) trace("FAIL!");
+
+			trace("ok...3");
+
+			trace("Benchmarking...");
+			var start_time:int;
+			var all_time:int = getTimer();
+			start_time = getTimer();
+
+			// Замер количества вызовов:
+			for(var i:int = 0; i < 1000; i++) JSSpiderANE.callScriptMethod(bench, null);
+
+			trace("benchCalls execution time: "+ Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+			start_time = getTimer();
+
+			// Замер скорости передачи голого траффика:
+			for(var k:int = 0; k < 1000; k++) JSSpiderANE.callScriptMethod(bench, data);
+
+			trace("benchTraffic execution time: "+ Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+			start_time = getTimer();
+
 			for(var l:int = 0; l < 1000; l++) JSSpiderANE.callScriptMethod(bench, j);
+
+			// Замер скорости передачи сложных объектов:
+			trace("benchJson execution time: "+ Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+			start_time = getTimer();
+
+			trace("Benchmarks all done in "+ (getTimer()-all_time) + " ms");
+
+			trace("DONE!");
 		}
 
 		private var longText:String = ''

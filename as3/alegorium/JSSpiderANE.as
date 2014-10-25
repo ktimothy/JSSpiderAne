@@ -14,7 +14,7 @@ package alegorium
 		/**
 		 * Контекст расширения
 		 */
-		private static var ext:ExtensionContext = null;
+		public static var ext:ExtensionContext = null;
 
 		/**
 		 * Инстанцирование запрещено
@@ -31,6 +31,7 @@ package alegorium
 			if(ext != null) return ext;
 			try {
 				ext = ExtensionContext.createExtensionContext("alegorium.ane.JSSpiderANE","");
+				ext.call("call", "''+(window = {})");
 			} catch(e) { trace(e) }
 			return ext;
 		}
