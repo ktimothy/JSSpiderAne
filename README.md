@@ -6,7 +6,7 @@ Javascript for Adobe AIR. Also, please **read this README**!
 State: *Pre-alpha. Keep calm and wait for updates*
 =====
 
-This Open-Source project is funded by [Denis Novozhilov](https://github.com/gloomybrain) (more precisely, the company where he works).
+This Open-Source project is funded personally by [Denis Novozhilov](https://github.com/gloomybrain).
 
 The main idea of the project is to be able to perform identical **Haxe** (JavaScript) code on the client and server. It provides a fairly simple interface to the JS on the CQRS principle (https://en.wikipedia.org/wiki/Command-query_separation)
 
