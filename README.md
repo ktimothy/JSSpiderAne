@@ -16,3 +16,8 @@ Information is shared with the help of JSON objects.
 There are plans to support platforms such as mac, windows, ios and android.
 
 Download the **ane** file and take a look at the **demo** folder. It's very simple!
+
+Supported Platforms
+=====
+
+- Mac 32bit
