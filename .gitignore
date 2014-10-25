@@ -24,8 +24,13 @@ temp
 demo/*_demo.fla
 demo/demo.fla
 demo/demo.swf
-demo/demo-app.xml
+demo/demo-app*
+demo/demo.app*
 AOTBuildOutput*
 projects/xcode/JSSpiderANE/Build*
 projects/xcode/JSSpiderANE/DerivedData*
 projects/xcode/JSSpiderANE/DerivedData/
+
+demo/demo.ipa
+projects/android
+projects/xcode/JSCoreANE
