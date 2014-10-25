@@ -36,6 +36,8 @@ ANENAME=$REPLACE
 cat extension.xml | sed -e "s/$SEARCH/$REPLACE/g" >> ./temp/extension.xml
 cp platformoptions.xml ./temp/
 
+# Copy binaries:
+mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework ./temp/JSSpiderANE.framework
 
 [[ -f "../ane/$ANENAME.ane" ]] && rm -f "../ane/$ANENAME.ane"
 
@@ -48,7 +50,13 @@ SRCPATH="../as3/"
 
 # Build:
 echo "GENERATING SWC"
-$ACOMPC -source-path $SRCPATH -include-classes $INCLUDE_CLASSES -swf-version=$SWFVERSION -define+=CONFIG::mock,false -output temp/$ANENAME.swc
+if test "../as3/alegorium/$ANENAME.as" -nt "../as3/alegorium/$ANENAME.swc"; then
+# file1 -nt file2;
+# file1 is newer than file2
+$ACOMPC -source-path $SRCPATH -include-classes $INCLUDE_CLASSES -swf-version=$SWFVERSION -define+=CONFIG::mock,false -output ../as3/alegorium/$ANENAME.swc
+fi
+
+cp -rf "../as3/alegorium/$ANENAME.swc" "temp/$ANENAME.swc"
 sleep 0
 
 cd temp
@@ -60,6 +68,8 @@ sleep 0
 
 echo "GENERATING ANE"
 
+# Only Mac
+$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./ .
 
 
 sleep 0
@@ -70,6 +80,8 @@ mv $ANENAME.ane ../../ane/
 [[ -f "library.swf" ]] && rm -f "library.swf"
 [[ -f "$ANENAME.swc" ]] && rm -f "$ANENAME.swc"
 cd ..
+
+mv -f ./temp/JSSpiderANE.framework ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework
 rm -rf temp
 
 echo "DONE!"
