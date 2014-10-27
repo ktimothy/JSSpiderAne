@@ -27,6 +27,8 @@ echo "ACOMPC: $ACOMPC"
 # Clean & Copy files:
 rm -rf temp
 mkdir temp
+mkdir temp/ios
+mkdir temp/mac
 
 # Patch xml files:
 SEARCH="_THIS_"
@@ -37,7 +39,9 @@ cat extension.xml | sed -e "s/$SEARCH/$REPLACE/g" >> ./temp/extension.xml
 cp platformoptions.xml ./temp/
 
 # Copy binaries:
-mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework ./temp/JSSpiderANE.framework
+mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a ./temp/ios/JSSpiderANE386.a
+mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a ./temp/ios/JSSpiderANE.a
+mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework ./temp/mac/JSSpiderANE.framework
 
 [[ -f "../ane/$ANENAME.ane" ]] && rm -f "../ane/$ANENAME.ane"
 
@@ -66,11 +70,16 @@ unzip $ANENAME.swc
 sleep 0
 [[ -f "catalog.xml" ]] && rm -f "catalog.xml"
 
+cp -rf "library.swf" "mac/library.swf"
+cp -rf "library.swf" "ios/library.swf"
+
 echo "GENERATING ANE"
 
 # Only Mac
-$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./ .
+#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./ .
 
+# Mac & iOS
+$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
 
 sleep 0
 
@@ -81,7 +90,9 @@ mv $ANENAME.ane ../../ane/
 [[ -f "$ANENAME.swc" ]] && rm -f "$ANENAME.swc"
 cd ..
 
-mv -f ./temp/JSSpiderANE.framework ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework
+mv -f ./temp/mac/JSSpiderANE.framework ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework
+mv -f ./temp/ios/JSSpiderANE386.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a
+mv -f ./temp/ios/JSSpiderANE.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a
 rm -rf temp
 
 echo "DONE!"

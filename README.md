@@ -21,3 +21,5 @@ Supported Platforms
 =====
 
 - Mac 32bit
+- iOS 32bit
+- iOS Sim 32bit
