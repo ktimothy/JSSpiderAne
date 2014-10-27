@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D9A9D0DD-9E0E-4FBA-A4D6-866F1B399BB3</string>
+	<key>IDESourceControlProjectName</key>
+	<string>JSSpiderANE</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>7C527A4B-6CD8-4AA6-8279-3C601D1A0F31</key>
+		<string>https://github.com/PeyTy/SpiderMonkey-AIR-ANE.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>projects/xcode/JSSpiderANE/JSSpiderANE.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>7C527A4B-6CD8-4AA6-8279-3C601D1A0F31</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/PeyTy/SpiderMonkey-AIR-ANE.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>7C527A4B-6CD8-4AA6-8279-3C601D1A0F31</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>7C527A4B-6CD8-4AA6-8279-3C601D1A0F31</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SpiderMonkey-AIR-ANE</string>
+		</dict>
+	</array>
+</dict>
+</plist>
