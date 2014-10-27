@@ -24,7 +24,7 @@ temp
 demo/*_demo.fla
 demo/demo.fla
 demo/demo.swf
-demo/demo-app*
+demo/demo*
 demo/demo.app*
 AOTBuildOutput*
 projects/xcode/JSSpiderANE/Build*
@@ -35,3 +35,7 @@ demo/demo.ipa
 projects/android
 projects/xcode/JSCoreANE
 projects/xcode/JSSpiderANE/libjs_static.i386.a
+
+projects/xcode/JSSpiderANE/libjs_static.armv7.a
+
+projects/xcode/JSSpiderANE/libjs_static.armv7s.a

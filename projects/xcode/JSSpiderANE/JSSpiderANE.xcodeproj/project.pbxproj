@@ -15,7 +15,6 @@
 		8401AEC319FA39B100DA07B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AEC219FA39B100DA07B9 /* Foundation.framework */; };
 		8401AEC819FA39B100DA07B9 /* JSSpideriOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8401AEC719FA39B100DA07B9 /* JSSpideriOS.h */; };
 		8401AECA19FA39B100DA07B9 /* JSSpideriOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 8401AEC919FA39B100DA07B9 /* JSSpideriOS.m */; };
-		8401AEE619FA39C900DA07B9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AEA819FA07BC00DA07B9 /* libz.dylib */; };
 		84414FFC19FC00660012B06A /* libjs_static.i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84414FFB19FC00660012B06A /* libjs_static.i386.a */; };
 		84905A5919FB0EB800A5260D /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 8401AEAF19FA213C00DA07B9 /* API.m */; };
 		84905A5B19FB172E00A5260D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AEA819FA07BC00DA07B9 /* libz.dylib */; };
@@ -153,6 +152,9 @@
 		84905B6819FB19A300A5260D /* WeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 84905AE419FB19A200A5260D /* WeakPtr.h */; };
 		84ADA18C19F9FC3B00EA246E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84ADA18B19F9FC3B00EA246E /* Cocoa.framework */; };
 		84ADA19619F9FC3B00EA246E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84ADA19419F9FC3B00EA246E /* InfoPlist.strings */; };
+		84B1A1FD19FE96EF005EC5EA /* libjs_static.i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84414FFB19FC00660012B06A /* libjs_static.i386.a */; };
+		84B1A20219FE9760005EC5EA /* libjs_static.armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */; };
+		84B1A20519FE97FC005EC5EA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1A20419FE97FC005EC5EA /* libz.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -180,6 +182,7 @@
 		8401AEC719FA39B100DA07B9 /* JSSpideriOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JSSpideriOS.h; sourceTree = "<group>"; };
 		8401AEC919FA39B100DA07B9 /* JSSpideriOS.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JSSpideriOS.m; sourceTree = "<group>"; };
 		84414FFB19FC00660012B06A /* libjs_static.i386.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.i386.a; sourceTree = "<group>"; };
+		84414FFD19FC19D00012B06A /* BindAS3.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BindAS3.cpp; sourceTree = "<group>"; };
 		84905A5F19FB19A200A5260D /* Anchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Anchor.h; sourceTree = "<group>"; };
 		84905A6019FB19A200A5260D /* CallArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallArgs.h; sourceTree = "<group>"; };
 		84905A6119FB19A200A5260D /* CallNonGenericMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallNonGenericMethod.h; sourceTree = "<group>"; };
@@ -320,6 +323,10 @@
 		84ADA19319F9FC3B00EA246E /* JSSpiderANE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JSSpiderANE-Info.plist"; sourceTree = "<group>"; };
 		84ADA19519F9FC3B00EA246E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84ADA19719F9FC3B00EA246E /* JSSpiderANE-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSSpiderANE-Prefix.pch"; sourceTree = "<group>"; };
+		84B1A1FE19FE9703005EC5EA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
+		84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.armv7.a; sourceTree = "<group>"; };
+		84B1A20119FE9760005EC5EA /* libjs_static.armv7s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.armv7s.a; sourceTree = "<group>"; };
+		84B1A20419FE97FC005EC5EA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,7 +335,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8401AEC319FA39B100DA07B9 /* Foundation.framework in Frameworks */,
-				8401AEE619FA39C900DA07B9 /* libz.dylib in Frameworks */,
+				84B1A20519FE97FC005EC5EA /* libz.dylib in Frameworks */,
+				84B1A1FD19FE96EF005EC5EA /* libjs_static.i386.a in Frameworks */,
+				84B1A20219FE9760005EC5EA /* libjs_static.armv7.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -533,6 +542,8 @@
 		84ADA17E19F9FC3B00EA246E = {
 			isa = PBXGroup;
 			children = (
+				84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */,
+				84B1A20119FE9760005EC5EA /* libjs_static.armv7s.a */,
 				84414FFB19FC00660012B06A /* libjs_static.i386.a */,
 				8401AD9819FA00A300DA07B9 /* jsapi */,
 				84ADA19119F9FC3B00EA246E /* JSSpiderANE */,
@@ -554,6 +565,8 @@
 		84ADA18A19F9FC3B00EA246E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84B1A20419FE97FC005EC5EA /* libz.dylib */,
+				84B1A1FE19FE9703005EC5EA /* CoreData.framework */,
 				8401AEA819FA07BC00DA07B9 /* libz.dylib */,
 				8401AD9219F9FEEF00DA07B9 /* Adobe AIR.framework */,
 				84ADA18B19F9FC3B00EA246E /* Cocoa.framework */,
@@ -579,6 +592,7 @@
 				8401AEAF19FA213C00DA07B9 /* API.m */,
 				8401AD9019F9FEBD00DA07B9 /* FlashRuntimeExtensions.h */,
 				84ADA19219F9FC3B00EA246E /* Supporting Files */,
+				84414FFD19FC19D00012B06A /* BindAS3.cpp */,
 			);
 			path = JSSpiderANE;
 			sourceTree = "<group>";
@@ -859,6 +873,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/admin/Documents/github/Spidermonkey/js/src/build-ios",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -878,6 +893,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/admin/Documents/github/Spidermonkey/js/src/build-ios",
+					"$(PROJECT_DIR)",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";

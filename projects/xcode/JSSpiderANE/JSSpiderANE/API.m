@@ -17,6 +17,7 @@
 #include "jsapi.h"
 using namespace JS;
 #define J
+//#include "BindAS3.cpp"
 #endif
 
 #define DEFINE_ANE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
