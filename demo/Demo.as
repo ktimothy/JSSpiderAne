@@ -65,6 +65,18 @@
 			JSSpiderANE.setScript("var exports = {\n\nblah-blah\n");
 			JSSpiderANE.setScript("\nvar x = z.helloe;\n");
 
+			var envDemo:String = "function Environment(){}";
+			var envDemoObj:Object = {
+				demo: function(params:String):String {
+					// parse input:
+					trace("params: "+params);
+					var input:Object = JSON.parse(params);
+					var output:Object = { hello: input.world };
+					return JSONHelper.convert(output);
+				}
+			};
+
+			JSSpiderANE.setEnvironment(envDemo, envDemoObj);
 			var script:String =
 				'var exports = {};'
 				+'(function ($hx_exports) { "use strict";'
