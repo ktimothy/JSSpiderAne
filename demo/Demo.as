@@ -2,10 +2,12 @@
 
 	import flash.display.MovieClip;
 	import alegorium.JSSpiderANE;
+	import alegorium.JSONHelper;
 	import flash.events.Event;
 	import flash.events.UncaughtErrorEvent;
 	import flash.text.TextField;
 	import flash.utils.getTimer;
+	import flash.events.StatusEvent;
 
 	public class Demo extends MovieClip {
 
@@ -28,11 +30,40 @@
 			text.appendText("\n"+x);
 		}
 
+		public function onException(e:StatusEvent):void
+		{
+			trace("Exception internally from JS...");
+			trace(e.code);
+		}
+
 		public function demo(a) {
 			removeEventListener(Event.ENTER_FRAME, demo);
 			trace("Hello!");
 			trace(JSSpiderANE);
 			trace("isSupported: " + JSSpiderANE.isSupported);
+			// Testing internal safe JSON generator:
+			trace(JSONHelper.convert(complexJSON));
+			trace(JSONHelper.convert(
+			      "abc123!@#$%^&*()_+\\|/'\";][{}/?.,:**//\t\b\f\rЫЮЯыюя[ё"));
+
+			// Functions is unallowed:
+			try {
+				trace(JSONHelper.convert({
+					obj: {
+						func: function(){}
+					}
+				}));
+			} catch(e:String) {
+				trace("Demo: " + e);
+			}
+
+			// Setting JS-side exception listener:
+			JSSpiderANE.setExceptionListener(onException);
+
+			// Testing exception listener:
+			trace("Suddenly, exceptions printed below of the log");
+			JSSpiderANE.setScript("var exports = {\n\nblah-blah\n");
+			JSSpiderANE.setScript("\nvar x = z.helloe;\n");
 
 			var script:String =
 				'var exports = {};'
