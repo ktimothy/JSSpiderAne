@@ -1,0 +1,4 @@
+- first unzip *.zip
+- set xcode Build folder to be relative to the project
+- CMD + Shift + I to build releases
+- do so for mac 32, ios sim and ios device
