@@ -23,3 +23,9 @@ Supported Platforms
 - Mac 32bit
 - iOS 32bit
 - iOS Sim 32bit
+
+How To Build SpiderMonkey
+=====
+
+- clone this https://github.com/ricardoquesada/Spidermonkey
+- run Spidermonkey / js / src / build-* / build.sh
