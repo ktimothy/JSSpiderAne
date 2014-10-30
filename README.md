@@ -29,3 +29,10 @@ How To Build SpiderMonkey
 
 - clone this https://github.com/ricardoquesada/Spidermonkey
 - run Spidermonkey / js / src / build-* / build.sh
+
+How To Build ANE
+=====
+
+- SpiderMonkey-AIR-ANE / projects / * / README.md
+- SpiderMonkey-AIR-ANE / build / README.md
+- run SpiderMonkey-AIR-ANE / build / make\_this\_ane.sh
