@@ -39,3 +39,5 @@ projects/xcode/JSSpiderANE/libjs_static.i386.a
 projects/xcode/JSSpiderANE/libjs_static.armv7.a
 
 projects/xcode/JSSpiderANE/libjs_static.armv7s.a
+
+ane/JSSpiderANE.ane
