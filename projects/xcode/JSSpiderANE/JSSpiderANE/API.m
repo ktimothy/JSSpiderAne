@@ -17,7 +17,6 @@
 #include "jsapi.h"
 using namespace JS;
 #define J
-//#include "BindAS3.cpp"
 #endif
 
 #define DEFINE_ANE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
@@ -50,9 +49,31 @@ RootedObject * global = NULL;
 JSObject * globalObj = NULL;
 #endif
 
+FREContext contextCache;
+
+// The error reporter callback.
+void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
+    char buff[4096];
+    sprintf(buff, "%s:%u:%s\n", report->filename ? report->filename : "[no filename]",
+            (unsigned int) report->lineno,
+            message);
+    JS_GC(rt); // clean up memory
+    DISPATCH_STATUS_EVENT(contextCache, buff, "error");
+}
+
+bool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
+{
+}
+
+static JSFunctionSpec myjs_global_functions[] = {
+    JS_FS("callAIRI", myjs_airi, 2, 0),
+    JS_FS_END
+};
+
 extern "C" {
 DEFINE_ANE_FUNCTION(eval)
 {
+    contextCache = context;
     #ifdef J
     // To be filled
     uint32_t scriptLength;
@@ -74,6 +95,7 @@ DEFINE_ANE_FUNCTION(eval)
 
 DEFINE_ANE_FUNCTION(call)
 {
+    contextCache = context;
     #ifdef J
     // To be filled
     uint32_t scriptLength;
@@ -109,6 +131,7 @@ DEFINE_ANE_FUNCTION(call)
     } else {
         FRENewObjectFromUTF8(9, (const uint8_t*)"undefined", &retVal);
     }
+    JS_free(cx, &rval);
     return retVal;
     #endif
     return nullptr;
@@ -141,6 +164,8 @@ void ExtensionContextInitializer(void* extData,
     
     cx = JS_NewContext(rt, 8192);
     if (!cx) return ;
+
+    JS_SetErrorReporter(cx, reportError);
     
     globalObj = JS_NewGlobalObject(cx, &global_class, nullptr, JS::DontFireOnNewGlobalHook);
     
@@ -149,6 +174,8 @@ void ExtensionContextInitializer(void* extData,
     
     JSAutoCompartment ac(cx, _global);
     JS_InitStandardClasses(cx, _global);
+    
+    JS_DefineFunctions(cx, _global, myjs_global_functions);
     
     global = &_global;
     #endif
