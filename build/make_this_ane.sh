@@ -76,7 +76,7 @@ cp -rf "library.swf" "ios/library.swf"
 echo "GENERATING ANE"
 
 # Only Mac
-#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./ .
+#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac .
 
 # Mac & iOS
 $ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
