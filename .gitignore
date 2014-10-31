@@ -32,7 +32,7 @@ projects/xcode/JSSpiderANE/DerivedData*
 projects/xcode/JSSpiderANE/DerivedData/
 
 demo/demo.ipa
-projects/android
+
 projects/xcode/JSCoreANE
 projects/xcode/JSSpiderANE/libjs_static.i386.a
 
@@ -41,3 +41,5 @@ projects/xcode/JSSpiderANE/libjs_static.armv7.a
 projects/xcode/JSSpiderANE/libjs_static.armv7s.a
 
 ane/JSSpiderANE.ane
+
+projects/android/jni/*
