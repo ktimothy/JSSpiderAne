@@ -43,3 +43,11 @@ projects/xcode/JSSpiderANE/libjs_static.armv7s.a
 ane/JSSpiderANE.ane
 
 projects/android/jni/*
+
+projects/android/so/*
+
+projects/android/so_arm/libs/*
+projects/android/so_arm/obj/*
+projects/android/so_x86/libs/*
+projects/android/so_x86/obj/*
+
