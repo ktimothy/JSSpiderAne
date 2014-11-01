@@ -43,6 +43,13 @@ mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJS
 mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a ./temp/ios/JSSpiderANE.a
 mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework ./temp/mac/JSSpiderANE.framework
 
+# android:
+mkdir -p temp/android/libs/armeabi-v7a
+mkdir -p temp/android/libs/x86
+
+cp "../projects/android/so_arm/libs/armeabi-v7a/libjs_staticARM7.so" temp/android/libs/armeabi-v7a/libalegorium.ane.$REPLACE.so
+cp "../projects/android/so_x86/libs/x86/libjs_static.so" temp/android/libs/x86/libalegorium.ane.$REPLACE.so
+
 [[ -f "../ane/$ANENAME.ane" ]] && rm -f "../ane/$ANENAME.ane"
 
 SWFVERSION=19
@@ -72,6 +79,8 @@ sleep 0
 
 cp -rf "library.swf" "mac/library.swf"
 cp -rf "library.swf" "ios/library.swf"
+cp -rf "library.swf" "android/libs/armeabi-v7a/library.swf"
+cp -rf "library.swf" "android/libs/x86/library.swf"
 
 echo "GENERATING ANE"
 
@@ -79,7 +88,6 @@ echo "GENERATING ANE"
 #$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac .
 
 # Mac & iOS
-$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
 
 sleep 0
 
