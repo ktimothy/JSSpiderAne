@@ -2,9 +2,6 @@
 //  API.cpp
 //  JSSpiderANE
 //
-//  Created by admin on 24.10.14.
-//  Copyright (c) 2014 PeyTy. All rights reserved.
-//
 
 #import "FlashRuntimeExtensions.h"
 
@@ -56,10 +53,6 @@ bool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 {
 }
 
-static JSFunctionSpec myjs_global_functions[] = {
-    JS_FS("callAIRI", myjs_airi, 2, 0),
-    JS_FS_END
-};
 
 extern "C" {
 DEFINE_ANE_FUNCTION(eval)
@@ -69,7 +62,7 @@ DEFINE_ANE_FUNCTION(eval)
     uint32_t scriptLength;
     const uint8_t *script;
     FREGetObjectAsUTF8(argv[0], &scriptLength, &script);
-    
+
     // Evaluate script.
     const char *bytes = reinterpret_cast<const char*>(script);
     JS::Value rval;
@@ -77,7 +70,7 @@ DEFINE_ANE_FUNCTION(eval)
     JS::RootedObject global(cx, globalObj);
     JSAutoCompartment ac(cx, global);
     JS_InitStandardClasses(cx, global);
-        
+
     JS_EvaluateScript(cx, global, bytes, scriptLength, nullptr, 0, &rval);
     return nullptr;
 }
@@ -89,12 +82,12 @@ DEFINE_ANE_FUNCTION(call)
     uint32_t scriptLength;
     const uint8_t *script;
     FREGetObjectAsUTF8(argv[0], &scriptLength, &script);
-    
+
     // Evaluate script.
     FREObject retVal;
     JS::Value rval;
     bool ok;
-  
+
     JS::RootedObject global(cx, globalObj);
     JSAutoCompartment ac(cx, global);
 //    JS_InitStandardClasses(cx, global);
@@ -106,7 +99,7 @@ DEFINE_ANE_FUNCTION(call)
         FRENewObjectFromUTF8(4, (const uint8_t*)"null", &retVal);
         return retVal;
     }
-    
+
     // Convert result to string
     if (ok) {
         JSString *str = rval.toString();
@@ -127,39 +120,39 @@ void ExtensionContextInitializer(void* extData,
                                  FREContext ctx,
                                  uint32_t* numFunctionsToSet,
                                  const FRENamedFunction** functionsToSet){
-    
+
     // Initialize the native context.
     static FRENamedFunction functionMap[] =
     {
         MAP_FUNCTION_NAMED((const uint8_t*)"eval", eval, nullptr),
         MAP_FUNCTION_NAMED((const uint8_t*)"call", call, nullptr)
     };
-    
+
     *numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
 	*functionsToSet = functionMap;
-    
+
     // Create JavaScript execution context.
 
     JS_Init();
-    
+
     rt = JS_NewRuntime(8L * 1024 * 1024, JS_NO_HELPER_THREADS);
     if (!rt) return ;
-    
+
     cx = JS_NewContext(rt, 8192);
     if (!cx) return ;
 
     JS_SetErrorReporter(cx, reportError);
-    
+
     globalObj = JS_NewGlobalObject(cx, &global_class, nullptr, JS::DontFireOnNewGlobalHook);
-    
+
     JS::RootedObject _global(cx, globalObj);
     if (!_global) return ;
-    
+
     JSAutoCompartment ac(cx, _global);
     JS_InitStandardClasses(cx, _global);
-    
+    JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", myjs_airi, 2, 0) };
     JS_DefineFunctions(cx, _global, myjs_global_functions);
-    
+
     global = &_global;
 }
 
