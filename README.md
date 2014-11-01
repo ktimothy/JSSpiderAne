@@ -23,6 +23,8 @@ Supported Platforms
 - Mac 32bit
 - iOS 32bit
 - iOS Sim 32bit
+- Android ARMv7
+- Android x86
 
 How To Build SpiderMonkey
 =====
