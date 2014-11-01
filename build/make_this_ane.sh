@@ -52,7 +52,7 @@ cp "../projects/android/so_x86/libs/x86/libjs_static.so" temp/android/libs/x86/l
 
 [[ -f "../ane/$ANENAME.ane" ]] && rm -f "../ane/$ANENAME.ane"
 
-SWFVERSION=19
+SWFVERSION=26
 
 INCLUDE_CLASSES="alegorium.$ANENAME"
 echo "INCLUDE_CLASSES: $INCLUDE_CLASSES"
