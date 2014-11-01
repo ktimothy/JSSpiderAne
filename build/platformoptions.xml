@@ -1,1 +1,1 @@
-<platform xmlns="http://ns.adobe.com/air/extension/3.6">	<sdkVersion>4.0.0</sdkVersion>	<linkerOptions>		<option>-ios_version_min 4.2</option>		<option>-framework Foundation</option>	</linkerOptions></platform>
+<platform xmlns="http://ns.adobe.com/air/extension/15.0">	<sdkVersion>4.0.0</sdkVersion>	<linkerOptions>		<option>-ios_version_min 4.2</option>		<option>-framework Foundation</option>	</linkerOptions></platform>
