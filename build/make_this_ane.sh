@@ -84,10 +84,7 @@ cp -rf "library.swf" "android/libs/x86/library.swf"
 
 echo "GENERATING ANE"
 
-# Only Mac
-#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac .
 
-# Mac & iOS
 
 sleep 0
 
