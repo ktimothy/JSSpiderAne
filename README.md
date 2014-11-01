@@ -28,6 +28,8 @@ How To Build SpiderMonkey
 =====
 
 - clone this https://github.com/ricardoquesada/Spidermonkey
+- cd Spidermonkey / js / src / build-* /
+- ../configure
 - run Spidermonkey / js / src / build-* / build.sh
 
 How To Build ANE
