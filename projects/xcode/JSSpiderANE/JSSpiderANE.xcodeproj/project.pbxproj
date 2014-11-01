@@ -155,7 +155,7 @@
 		84ADA19619F9FC3B00EA246E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84ADA19419F9FC3B00EA246E /* InfoPlist.strings */; };
 		84B1A1FD19FE96EF005EC5EA /* libjs_static.i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84414FFB19FC00660012B06A /* libjs_static.i386.a */; };
 		84B1A20219FE9760005EC5EA /* libjs_static.armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */; };
-		84B1A20519FE97FC005EC5EA /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1A20419FE97FC005EC5EA /* libz.dylib */; };
+		84CEDC5E1A027B3B0008CF59 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84CEDC5D1A027B3B0008CF59 /* libz.1.2.5.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -327,6 +327,7 @@
 		84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.armv7.a; sourceTree = "<group>"; };
 		84B1A20119FE9760005EC5EA /* libjs_static.armv7s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.armv7s.a; sourceTree = "<group>"; };
 		84B1A20419FE97FC005EC5EA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
+		84CEDC5D1A027B3B0008CF59 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libz.1.2.5.dylib; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -334,8 +335,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84CEDC5E1A027B3B0008CF59 /* libz.1.2.5.dylib in Frameworks */,
 				8401AEC319FA39B100DA07B9 /* Foundation.framework in Frameworks */,
-				84B1A20519FE97FC005EC5EA /* libz.dylib in Frameworks */,
 				84B1A1FD19FE96EF005EC5EA /* libjs_static.i386.a in Frameworks */,
 				84B1A20219FE9760005EC5EA /* libjs_static.armv7.a in Frameworks */,
 				84027CAC1A010AD40079456C /* libjs_static.armv7s.a in Frameworks */,
@@ -566,6 +567,7 @@
 		84ADA18A19F9FC3B00EA246E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				84CEDC5D1A027B3B0008CF59 /* libz.1.2.5.dylib */,
 				84B1A20419FE97FC005EC5EA /* libz.dylib */,
 				84B1A1FE19FE9703005EC5EA /* CoreData.framework */,
 				8401AEA819FA07BC00DA07B9 /* libz.dylib */,
