@@ -6,18 +6,12 @@
 //  Copyright (c) 2014 PeyTy. All rights reserved.
 //
 
-#define J
-
 #import "FlashRuntimeExtensions.h"
 
-#ifdef J
 #define RELEASE
 #undef DEBUG
-#undef J
 #include "jsapi.h"
 using namespace JS;
-#define J
-#endif
 
 #define DEFINE_ANE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
 
@@ -29,7 +23,6 @@ using namespace JS;
 
 // Globalvar
 
-#ifdef J
 /* The class of the global object. */
 static JSClass global_class = {
     "window",
@@ -47,7 +40,6 @@ JSRuntime *rt;
 JSContext *cx;
 RootedObject * global = NULL;
 JSObject * globalObj = NULL;
-#endif
 
 FREContext contextCache;
 
@@ -57,7 +49,6 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
     sprintf(buff, "%s:%u:%s\n", report->filename ? report->filename : "[no filename]",
             (unsigned int) report->lineno,
             message);
-    JS_GC(rt); // clean up memory
     DISPATCH_STATUS_EVENT(contextCache, buff, "error");
 }
 
@@ -74,7 +65,6 @@ extern "C" {
 DEFINE_ANE_FUNCTION(eval)
 {
     contextCache = context;
-    #ifdef J
     // To be filled
     uint32_t scriptLength;
     const uint8_t *script;
@@ -89,14 +79,12 @@ DEFINE_ANE_FUNCTION(eval)
     JS_InitStandardClasses(cx, global);
         
     JS_EvaluateScript(cx, global, bytes, scriptLength, nullptr, 0, &rval);
-    #endif
     return nullptr;
 }
 
 DEFINE_ANE_FUNCTION(call)
 {
     contextCache = context;
-    #ifdef J
     // To be filled
     uint32_t scriptLength;
     const uint8_t *script;
@@ -127,14 +115,10 @@ DEFINE_ANE_FUNCTION(call)
                              JS_GetStringEncodingLength(cx, str),
                              (const uint8_t*)buffer,
                              &retVal);
-        free(buffer);
     } else {
         FRENewObjectFromUTF8(9, (const uint8_t*)"undefined", &retVal);
     }
-    JS_free(cx, &rval);
     return retVal;
-    #endif
-    return nullptr;
 }
 } // extern C
 // A native context instance is created
@@ -155,7 +139,6 @@ void ExtensionContextInitializer(void* extData,
 	*functionsToSet = functionMap;
     
     // Create JavaScript execution context.
-    #ifdef J
 
     JS_Init();
     
@@ -178,17 +161,14 @@ void ExtensionContextInitializer(void* extData,
     JS_DefineFunctions(cx, _global, myjs_global_functions);
     
     global = &_global;
-    #endif
 }
 
 void ExtensionContextFinalizer(FREContext ctx)
 {
 	// Release JavaScript execution context.
-    #ifdef J
     JS_DestroyContext(cx);
     JS_DestroyRuntime(rt);
     JS_ShutDown();
-    #endif
 }
 
 extern "C"
