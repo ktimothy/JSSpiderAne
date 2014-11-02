@@ -53,3 +53,9 @@ projects/android/so_x86/obj/*
 
 
 as3/alegorium/JSSpiderANE.swc
+
+projects/android/so_arm/jni/libjs_staticARM7.a
+
+projects/android/so_x86/jni/libjs_static.a
+
+projects/win32/*
