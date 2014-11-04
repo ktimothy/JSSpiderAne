@@ -25,15 +25,15 @@ using namespace JS;
 
 /* The class of the global object. */
 static JSClass global_class = {
-    "window",
-    JSCLASS_GLOBAL_FLAGS,
-    JS_PropertyStub,
-    JS_DeletePropertyStub,
-    JS_PropertyStub,
-    JS_StrictPropertyStub,
-    JS_EnumerateStub,
-    JS_ResolveStub,
-    JS_ConvertStub
+	"window",
+	JSCLASS_GLOBAL_FLAGS,
+	JS_PropertyStub,
+	JS_DeletePropertyStub,
+	JS_PropertyStub,
+	JS_StrictPropertyStub,
+	JS_EnumerateStub,
+	JS_ResolveStub,
+	JS_ConvertStub
 };
 
 JSRuntime *rt;
@@ -119,52 +119,52 @@ DEFINE_ANE_FUNCTION(call)
 } // extern C
 // A native context instance is created
 void ExtensionContextInitializer(void* extData,
-                                 const uint8_t* ctxType,
-                                 FREContext ctx,
-                                 uint32_t* numFunctionsToSet,
-                                 const FRENamedFunction** functionsToSet){
-
-    // Initialize the native context.
-    static FRENamedFunction functionMap[] =
-    {
         MAP_FUNCTION_NAMED((const uint8_t*)"eval", eval, nullptr),
         MAP_FUNCTION_NAMED((const uint8_t*)"call", call, nullptr)
-    };
+								 const uint8_t* ctxType,
+								 FREContext ctx,
+								 uint32_t* numFunctionsToSet,
+								 const FRENamedFunction** functionsToSet){
 
-    *numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
+	// Initialize the native context.
+	static FRENamedFunction functionMap[] =
+	{
+	};
+
+	*numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
 	*functionsToSet = functionMap;
 
-    // Create JavaScript execution context.
+	// Create JavaScript execution context.
 
-    JS_Init();
+	JS_Init();
 
-    rt = JS_NewRuntime(8L * 1024 * 1024, JS_NO_HELPER_THREADS);
-    if (!rt) return ;
+	rt = JS_NewRuntime(8L * 1024 * 1024, JS_NO_HELPER_THREADS);
+	if (!rt) return ;
 
-    cx = JS_NewContext(rt, 8192);
-    if (!cx) return ;
+	cx = JS_NewContext(rt, 8192);
+	if (!cx) return ;
 
-    JS_SetErrorReporter(cx, reportError);
+	JS_SetErrorReporter(cx, reportError);
 
-    globalObj = JS_NewGlobalObject(cx, &global_class, nullptr, JS::DontFireOnNewGlobalHook);
+	globalObj = JS_NewGlobalObject(cx, &global_class, nullptr, JS::DontFireOnNewGlobalHook);
 
-    JS::RootedObject _global(cx, globalObj);
-    if (!_global) return ;
+	JS::RootedObject _global(cx, globalObj);
+	if (!_global) return ;
 
-    JSAutoCompartment ac(cx, _global);
-    JS_InitStandardClasses(cx, _global);
-    JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", myjs_airi, 2, 0) };
-    JS_DefineFunctions(cx, _global, myjs_global_functions);
+	JSAutoCompartment ac(cx, _global);
+	JS_InitStandardClasses(cx, _global);
+	JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", myjs_airi, 2, 0) };
+	JS_DefineFunctions(cx, _global, myjs_global_functions);
 
-    global = &_global;
+	global = &_global;
 }
 
 void ExtensionContextFinalizer(FREContext ctx)
 {
 	// Release JavaScript execution context.
-    JS_DestroyContext(cx);
-    JS_DestroyRuntime(rt);
-    JS_ShutDown();
+	JS_DestroyContext(cx);
+	JS_DestroyRuntime(rt);
+	JS_ShutDown();
 }
 
 extern "C"
