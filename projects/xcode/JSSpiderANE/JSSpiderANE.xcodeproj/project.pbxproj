@@ -176,7 +176,7 @@
 		8401AD9219F9FEEF00DA07B9 /* Adobe AIR.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = "Adobe AIR.framework"; sourceTree = "<group>"; };
 		8401ADEA19FA00A300DA07B9 /* jsapi.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = jsapi.h; sourceTree = "<group>"; };
 		8401AEA819FA07BC00DA07B9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		8401AEAF19FA213C00DA07B9 /* API.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = API.m; sourceTree = "<group>"; };
+		8401AEAF19FA213C00DA07B9 /* API.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 4; path = API.m; sourceTree = "<group>"; usesTabs = 1; };
 		8401AEC119FA39B100DA07B9 /* libJSSpideriOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libJSSpideriOS.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		8401AEC219FA39B100DA07B9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		8401AEC619FA39B100DA07B9 /* JSSpideriOS-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSSpideriOS-Prefix.pch"; sourceTree = "<group>"; };
