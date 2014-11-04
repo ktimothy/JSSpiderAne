@@ -60,67 +60,11 @@ JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 extern "C" {
 DEFINE_ANE_FUNCTION(eval)
 {
-    contextCache = context;
-    // To be filled
-    uint32_t scriptLength;
-    const uint8_t *script;
-    FREGetObjectAsUTF8(argv[0], &scriptLength, &script);
 
-    // Evaluate script.
-    const char *bytes = reinterpret_cast<const char*>(script);
-    JS::Value rval;
-
-    JS::RootedObject global(cx, globalObj);
-    JSAutoCompartment ac(cx, global);
-    JS_InitStandardClasses(cx, global);
-
-    JS_EvaluateScript(cx, global, bytes, scriptLength, nullptr, 0, &rval);
-    return nullptr;
-}
-
-DEFINE_ANE_FUNCTION(call)
-{
-    contextCache = context;
-    // To be filled
-    uint32_t scriptLength;
-    const uint8_t *script;
-    FREGetObjectAsUTF8(argv[0], &scriptLength, &script);
-
-    // Evaluate script.
-    FREObject retVal;
-    JS::Value rval;
-    bool ok;
-
-    JS::RootedObject global(cx, globalObj);
-    JSAutoCompartment ac(cx, global);
-//    JS_InitStandardClasses(cx, global);
-        
-    ok = JS_EvaluateScript(cx, global, reinterpret_cast<const char*>(script), scriptLength, nullptr, 0, &rval);
-    
-    if (rval.isNullOrUndefined())// | rval.isFalse() )
-    {
-        FRENewObjectFromUTF8(4, (const uint8_t*)"null", &retVal);
-        return retVal;
-    }
-
-    // Convert result to string
-    if (ok) {
-        JSString *str = rval.toString();
-        char* buffer = JS_EncodeString(cx, str);
-        FRENewObjectFromUTF8(
-                             JS_GetStringEncodingLength(cx, str),
-                             (const uint8_t*)buffer,
-                             &retVal);
-    } else {
-        FRENewObjectFromUTF8(9, (const uint8_t*)"undefined", &retVal);
-    }
-    return retVal;
 }
 } // extern C
 // A native context instance is created
 void ExtensionContextInitializer(void* extData,
-        MAP_FUNCTION_NAMED((const uint8_t*)"eval", eval, nullptr),
-        MAP_FUNCTION_NAMED((const uint8_t*)"call", call, nullptr)
 								 const uint8_t* ctxType,
 								 FREContext ctx,
 								 uint32_t* numFunctionsToSet,
@@ -129,6 +73,7 @@ void ExtensionContextInitializer(void* extData,
 	// Initialize the native context.
 	static FRENamedFunction functionMap[] =
 	{
+		MAP_FUNCTION_NAMED((const uint8_t*)"eval", eval, nullptr)
 	};
 
 	*numFunctionsToSet = sizeof( functionMap ) / sizeof( FRENamedFunction );
