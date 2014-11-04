@@ -9,6 +9,9 @@
 #undef DEBUG
 #include "jsapi.h"
 using namespace JS;
+#define JSBool bool
+#define JS_TRUE true
+#define JS_FALSE false
 
 #define DEFINE_ANE_FUNCTION(fn) FREObject (fn)(FREContext context, void* functionData, uint32_t argc, FREObject argv[])
 
@@ -49,7 +52,7 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
     DISPATCH_STATUS_EVENT(contextCache, buff, "error");
 }
 
-bool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
+JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 {
 }
 
