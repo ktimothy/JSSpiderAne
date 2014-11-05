@@ -40,27 +40,85 @@ JSRuntime *rt;
 JSContext *cx;
 RootedObject * global = NULL;
 JSObject * globalObj = NULL;
-
+char buffError[4096];
 FREContext contextCache;
+JSScript * preCompiledStringify;
 
 // The error reporter callback.
 void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
-    char buff[4096];
-    sprintf(buff, "%s:%u:%s\n", report->filename ? report->filename : "[no filename]",
-            (unsigned int) report->lineno,
-            message);
-    DISPATCH_STATUS_EVENT(contextCache, buff, "error");
+	sprintf(buffError, "%s:%u:%s", report->filename ? report->filename : "[no filename]",
+			(unsigned int) report->lineno,
+			message);
+	DISPATCH_STATUS_EVENT(contextCache, buffError, "error");
 }
 
 JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 {
 }
 
+JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", myjs_airi, 2, 0), JS_FS_END };
 
 extern "C" {
 DEFINE_ANE_FUNCTION(eval)
 {
+	contextCache = context;
+	// To be filled
+	uint32_t scriptLength;
+	const uint8_t *script;
+	FREGetObjectAsUTF8(argv[0], &scriptLength, &script);
 
+	// Evaluate script.
+	FREObject retVal;
+	JS::Value rval;
+
+	JS::RootedObject global(cx, globalObj);
+	JSAutoCompartment ac(cx, global);
+
+	bool ok = JS_EvaluateScript(cx, global, reinterpret_cast<const char*>(script), scriptLength, nullptr, 0, &rval);
+
+	// All ok and nothing to return
+	if(ok) if(rval.isNullOrUndefined())
+	{
+		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"result\":null}", &retVal);
+		return retVal;
+	}
+
+	// Create resulting object
+	JSObject * resultContainerObj = JS_NewObject(cx, NULL, NULL, NULL);
+	JS::Value resultContainer = OBJECT_TO_JSVAL(resultContainerObj);
+	JS::Handle<JS::Value> resultContainerv = HandleValue::fromMarkedLocation(&resultContainer);
+
+	// All ok and we have a result...
+	if(ok) {
+		JS::Handle<JS::Value> v = HandleValue::fromMarkedLocation(&rval);
+		JS_SetProperty(cx, resultContainerObj, (const char *)"result", v);
+	}
+
+	// ...otherwise
+	else {
+		JSString * errstr = JS_NewStringCopyN(cx, buffError, 4096);
+		JS::Value errval = JS::StringValue(errstr);
+		JS::Handle<JS::Value> v = HandleValue::fromMarkedLocation(&errval);
+		JS_SetProperty(cx, resultContainerObj, (const char *)"error", v);
+	}
+
+	// Stringify result to JSON string
+	JS::Value rval2;
+
+	JS_SetProperty(cx, globalObj, (const char *)"t", resultContainerv);
+
+	if(!JS_ExecuteScript(cx, global, preCompiledStringify, &rval2)) return NULL;
+
+	JSString *str = rval2.toString();
+
+	// Convert result to AS3 string
+	FRENewObjectFromUTF8(
+						 JS_GetStringEncodingLength(cx, str),
+						 (const uint8_t*)JS_EncodeString(cx, str),
+						 &retVal);
+
+	// Done
+	return retVal;
 }
 } // extern C
 // A native context instance is created
@@ -83,10 +141,10 @@ void ExtensionContextInitializer(void* extData,
 
 	JS_Init();
 
-	rt = JS_NewRuntime(8L * 1024 * 1024, JS_NO_HELPER_THREADS);
+	rt = JS_NewRuntime(8L * 1024 * 1024 * 2, JS_NO_HELPER_THREADS);
 	if (!rt) return ;
 
-	cx = JS_NewContext(rt, 8192);
+	cx = JS_NewContext(rt, 8192 * 2);
 	if (!cx) return ;
 
 	JS_SetErrorReporter(cx, reportError);
@@ -98,10 +156,17 @@ void ExtensionContextInitializer(void* extData,
 
 	JSAutoCompartment ac(cx, _global);
 	JS_InitStandardClasses(cx, _global);
-	JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", myjs_airi, 2, 0) };
+
 	JS_DefineFunctions(cx, _global, myjs_global_functions);
 
 	global = &_global;
+
+	// Precompile JSON-script:
+	JS::Value rval;
+	JS_EvaluateScript(cx, _global, (const char *)"t={}", 4, nullptr, 0, &rval);
+	JS::HandleObject obj = HandleObject::fromMarkedLocation(&globalObj);
+	const JS::CompileOptions options(cx);
+	preCompiledStringify = JS_CompileScript(cx, obj, (const char *)"JSON.stringify(t)", 17, options);
 }
 
 void ExtensionContextFinalizer(FREContext ctx)
