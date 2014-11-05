@@ -54,6 +54,74 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
 
 JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 {
+	DISPATCH_STATUS_EVENT(contextCache, "called: myjs_airi", "error");
+	
+	// get arguments
+	JSString* name;
+	JSString* params;
+
+	char *cname;
+	size_t cname_size;
+	char *cparams;
+	size_t cparams_size;
+
+	if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "SS", &name, &params)) return false;
+
+	cname = JS_EncodeString(cx, name);
+	cparams = JS_EncodeString(cx, params);
+	cname_size = JS_GetStringEncodingLength(cx, name);
+	cparams_size = JS_GetStringEncodingLength(cx, params);
+
+
+	DISPATCH_STATUS_EVENT(contextCache, cname, "error");
+	DISPATCH_STATUS_EVENT(contextCache, cparams, "error");
+
+	const uint8_t *cresult;
+	uint32_t cresult_size;
+
+	// convert strings
+	FREObject freparams;
+	FRENewObjectFromUTF8(cparams_size, (const uint8_t*)cparams, &freparams);
+
+	// call AS3
+	FREObject freas3, freresult;
+
+	FRENewObjectFromUTF8(4, (const uint8_t*)"null", &freresult);
+
+	FREGetContextActionScriptData(contextCache, &freas3);
+
+	if(!freas3)	DISPATCH_STATUS_EVENT(contextCache, "freas3 is NULL", "error");
+
+	FREObjectType type;
+
+	auto isOk = FREGetObjectType(freas3, &type);
+
+	if(type != FRE_TYPE_OBJECT) DISPATCH_STATUS_EVENT(contextCache, "FREGetObjectType is NOT FRE_TYPE_OBJECT", "error");
+	if(isOk != FRE_OK) DISPATCH_STATUS_EVENT(contextCache, "FREGetObjectType failed", "error");
+
+	auto r = FRECallObjectMethod (&freas3, // error here?
+						 (const uint8_t*)cname,
+						 1,
+						 {&freparams}, // or here?
+						 &freresult,
+						 NULL
+						 );
+
+	if(r == FRE_NO_SUCH_NAME) DISPATCH_STATUS_EVENT(contextCache, "FRE_NO_SUCH_NAME", "error");
+	if(r == FRE_INVALID_OBJECT) DISPATCH_STATUS_EVENT(contextCache, "FRE_INVALID_OBJECT", "error");
+	if(r == FRE_TYPE_MISMATCH) DISPATCH_STATUS_EVENT(contextCache, "FRE_TYPE_MISMATCH", "error");
+	if(r == FRE_ACTIONSCRIPT_ERROR) DISPATCH_STATUS_EVENT(contextCache, "FRE_ACTIONSCRIPT_ERROR", "error");
+	if(r == FRE_INVALID_ARGUMENT) DISPATCH_STATUS_EVENT(contextCache, "FRE_INVALID_ARGUMENT", "error");
+	if(r == FRE_READ_ONLY) DISPATCH_STATUS_EVENT(contextCache, "FRE_READ_ONLY", "error");
+	if(r == FRE_WRONG_THREAD) DISPATCH_STATUS_EVENT(contextCache, "FRE_WRONG_THREAD", "error");
+	if(r == FRE_ILLEGAL_STATE) DISPATCH_STATUS_EVENT(contextCache, "FRE_ILLEGAL_STATE", "error");
+	if(r == FRE_INSUFFICIENT_MEMORY) DISPATCH_STATUS_EVENT(contextCache, "FRE_INSUFFICIENT_MEMORY", "error");
+
+	// convert result
+	FREGetObjectAsUTF8(freresult, &cresult_size, &cresult);
+	DISPATCH_STATUS_EVENT(contextCache, cresult, "error");
+
+	return JS_NewStringCopyN(cx, (const char*)cresult, cresult_size);
 }
 
 JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", myjs_airi, 2, 0), JS_FS_END };
