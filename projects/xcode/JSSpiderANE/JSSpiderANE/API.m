@@ -173,8 +173,8 @@ DEFINE_ANE_FUNCTION(eval)
 
 	// Create resulting object
 	JSObject * resultContainerObj = JS_NewObject(cx, NULL, NULL, NULL);
-	JS::Value resultContainer = OBJECT_TO_JSVAL(resultContainerObj);
-	JS::Handle<JS::Value> resultContainerv = HandleValue::fromMarkedLocation(&resultContainer);
+	JS::Value resultContainerValue = OBJECT_TO_JSVAL(resultContainerObj);
+	JS::Handle<JS::Value> resultContainerHandle = HandleValue::fromMarkedLocation(&resultContainerValue);
 
 	// All ok and we have a result...
 	if(ok) {
@@ -193,10 +193,12 @@ DEFINE_ANE_FUNCTION(eval)
 	// Stringify result to JSON string
 	JS::Value rval2;
 
-	JS_SetProperty(cx, globalObj, (const char *)"t", resultContainerv);
+	JS_SetProperty(cx, globalObj, (const char *)"_$", resultContainerHandle);
 
-	if(!JS_ExecuteScript(cx, global, preCompiledStringify, &rval2)) return NULL;
-
+	if(!JS_ExecuteScript(cx, global, preCompiledStringify, &rval2)) {
+		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_ExecuteScript failed\"}", &retVal);
+		return retVal;
+	}
 	JSString *str = rval2.toString();
 
 	// Convert result to AS3 string
@@ -251,10 +253,10 @@ void ExtensionContextInitializer(void* extData,
 
 	// Precompile JSON-script:
 	JS::Value rval;
-	JS_EvaluateScript(cx, _global, (const char *)"t={}", 4, nullptr, 0, &rval);
+	JS_EvaluateScript(cx, _global, (const char *)"_$={}", 5, nullptr, 0, &rval);
 	JS::HandleObject obj = HandleObject::fromMarkedLocation(&globalObj);
 	const JS::CompileOptions options(cx);
-	preCompiledStringify = JS_CompileScript(cx, obj, (const char *)"JSON.stringify(t)", 17, options);
+	preCompiledStringify = JS_CompileScript(cx, obj, (const char *)"JSON.stringify(_$)", 18, options);
 }
 
 void ExtensionContextFinalizer(FREContext ctx)
