@@ -38,7 +38,6 @@ package alegorium
 				_context =
 				ExtensionContext.createExtensionContext("alegorium.ane.JSSpiderANE",
 				                                        "");
-				_context.call("eval", "''+(window = {})");
 
 				if (_exceptionListener)
 				{
@@ -72,10 +71,11 @@ package alegorium
 
 		public static function evaluateScript(script:String):Object
 		{
-			var callResultString:String = getContext().call("eval",script) as String;
+			if(_context == null) getContext();
+			var callResultString:String = _context.call("eval",script) as String;
 			var callResult:Object = JSON.parse(callResultString);
 
-			if (callResult.hasOwnProperty("error") && callResult.error != null)
+			if(callResult.error)
 			{
 				throw new Error(String(callResult.error));
 			}

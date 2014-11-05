@@ -2,7 +2,6 @@
 
 	import flash.display.MovieClip;
 	import alegorium.JSSpiderANE;
-	import alegorium.JSONHelper;
 	import flash.events.Event;
 	import flash.events.UncaughtErrorEvent;
 	import flash.text.TextField;
@@ -25,147 +24,84 @@
 			);
 		}
 
-		public function trace(x:*)
+		public final function trace(x:*)
 		{
 			text.appendText("\n"+x);
 		}
 
-		public function onException(e:StatusEvent):void
+		public final function onException(e:StatusEvent):void
 		{
 			trace("Exception internally from JS...");
 			trace(e.code);
 		}
 
-		public function demo(a) {
+		public final function demo(a) {
 			removeEventListener(Event.ENTER_FRAME, demo);
 			trace("Hello!");
 			trace(JSSpiderANE);
 			trace("isSupported: " + JSSpiderANE.isSupported);
-			// Testing internal safe JSON generator:
-			trace(JSONHelper.convert(complexJSON));
-			trace(JSONHelper.convert(
-			      "abc123!@#$%^&*()_+\\|/'\";][{}/?.,:**//\t\b\f\rЫЮЯыюя[ё"));
-
-			// Functions is unallowed:
-			try {
-				trace(JSONHelper.convert({
-					obj: {
-						func: function(){}
-					}
-				}));
-			} catch(e:String) {
-				trace("Demo: " + e);
-			}
 
 			// Setting JS-side exception listener:
 			JSSpiderANE.setExceptionListener(onException);
+			trace("exception listener defined");
 
 			// Testing exception listener:
-			trace("Suddenly, exceptions printed below of the log");
-			JSSpiderANE.setScript("var exports = {\n\nblah-blah\n");
-			JSSpiderANE.setScript("\nvar x = z.helloe;\n");
 
-			var envDemo:String = "function Environment(){}";
-			var envDemoObj:Object = {
-				demo: function(params:String):String {
-					// parse input:
-					trace("params: "+params);
-					var input:Object = JSON.parse(params);
-					var output:Object = { hello: input.world };
-					return JSONHelper.convert(output);
-				}
-			};
+			try {
+				JSSpiderANE.evaluateScript("var exports = {\n\nblah-blah\n");
+			}catch(e) {
+				trace(e);
+			}
 
-			JSSpiderANE.setEnvironment(envDemo, envDemoObj);
-			var script:String =
-				'var exports = {};'
-				+'(function ($hx_exports) { "use strict";'
-				+'var Context = $hx_exports.Context = function() {'
-				+'};'
+			try {
+				JSSpiderANE.evaluateScript("\nvar x = z.helloe;\n");
+			}catch(e) {
+				trace(e);
+			}
 
-				+'Context.main = function() {'
-				+'    Context.instance = new Context();'
-				+'};'
-
-				+'Context.prototype = {'
-				+'    command: function(param) {'
-				+'        return "command";'
-				+'    }'
-				+'    ,query: function(param) {'
-				+'        return "query";'
-				+'    }'
-
-				+'    ,demo: function(param) {'
-				+'         param.world = "Unicode: т!яы•…ђ";'
-				+'         return param;'
-				+'    }'
-				+'    ,bench: function(param) {'
-				+'        return param;'
-				+'    }'
-
-				+'};'
-				+'Context.main();'
-				+'})(typeof window != "undefined" ? window : exports);';
-
-			trace("pre...setScript before");
-			JSSpiderANE.setScript(script);
-			trace("pre...setScript after");
-
-			trace(JSSpiderANE.ext.call("call", "'exports: '+exports"));
-			trace(JSSpiderANE.ext.call("call", "'exports.Context: '+exports.Context"));
-			trace(JSSpiderANE.ext.call("call", "'window: '+window"));
-			trace(JSSpiderANE.ext.call("call", "'window.Context: '+window.Context"));
-			trace(JSSpiderANE.ext.call("call", "'window.Context.instance: '+window.Context.instance"));
-			trace(JSSpiderANE.ext.call("call", "'window.Context.instance.demo: '+window.Context.instance.demo"));
+			trace("Suddenly, async exceptions printed below of the log");
 
 			trace("ok...");
 
-			trace(JSSpiderANE.ext.call("call", "''+(23+1)"));
+			evalTest("''+(23+1)");
+			evalTest("'{}:'+{}");
+			evalTest("'window: '+window");
+			evalTest("''+(window = {})");
+			evalTest("'window: '+window");
+			evalTest("''+(x = 7)");
+			evalTest("'x: '+x");
+			evalTest("var x = 7;");
+			evalTest("'x: '+x");
+			evalTest("[1,2,3]");
+			evalTest("{a:1,b:true,c:null,e:'hi',d:8.05,f:{a:0}}"); // ERROR!
+			evalTest("({a:1,b:true,c:null,e:'hi',d:8.05,f:{a:0}})"); // USE ( obj )
+			evalTest("function demo(x){return x * 7;}");
+			evalTest("demo(7)");
+			evalTest("({hello:\"world-привет!яы•…ђіƒm‘'ѕѓ†ўџўz\"})");
 
-			trace(JSSpiderANE.ext.call("call", "'{}:'+{}"));
-			trace(JSSpiderANE.ext.call("call", "'window: '+window"));
-			trace(JSSpiderANE.ext.call("call", "''+(window = {})"));
-			trace(JSSpiderANE.ext.call("call", "'window: '+window"));
-			trace(JSSpiderANE.ext.call("call", "''+(x = 7)"));
-			trace(JSSpiderANE.ext.call("call", "'x: '+x"));
-
-			trace(JSSpiderANE.ext.call("call", "var x = 7;"));
-			trace(JSSpiderANE.ext.call("call", "'x: '+x"));
-
-			// Вызовем метод:
-			var met:String = "demo"; // Имя метода
-			var args:Object = {hello:"world-привет!яы•…ђіƒm‘'ѕѓ†ўџўz"}; // Параметры
-			var res:Object = JSSpiderANE.callScriptMethod(met, args); // Вызов и результат
-
-			trace("ok...1");
-			// Результат уже обработан, и является объектом:
-			trace(res);
-			trace(JSON.stringify(res));
-			trace(res.hello);
-			trace(res.world);
-			trace("ok...2");
+			trace("ok...");
 
 			// Проверим разные типы данных и кодировки:
-			var bench:String = "bench"; // Имя метода
-			trace(JSSpiderANE.callScriptMethod(bench, true) == true);
-			trace(JSSpiderANE.callScriptMethod(bench, 777) == 777);
-			trace(JSSpiderANE.callScriptMethod(bench, null) == null);
-			trace(JSSpiderANE.callScriptMethod(bench, "true") == "true");
-			trace(JSSpiderANE.callScriptMethod(bench, 0.5) == 0.5);
-			trace(JSSpiderANE.callScriptMethod(bench, [1,2,3]).length == 3);
-			trace(JSSpiderANE.callScriptMethod(bench, "привет") == "привет");
-			trace(JSSpiderANE.callScriptMethod(bench, "ПРЫВЕТЯ") == "ПРЫВЕТЯ");
-			trace(JSSpiderANE.callScriptMethod(bench, "ѕѓ†ўџўz") == "ѕѓ†ўџўz");
-			trace(JSSpiderANE.callScriptMethod(bench, "متن درج کریں") == "متن درج کریں");
+			trace(evalCheck(true) == true);
+			trace(evalCheck(777) == 777);
+			trace(evalCheck(null) == null);
+			trace(evalCheck("true") == "true");
+			trace(evalCheck(0.5) == 0.5);
+			trace(evalCheck([1,2,3]).length == 3);
+			trace(evalCheck("привет") == "привет");
+			trace(evalCheck("ПРЫВЕТЯ") == "ПРЫВЕТЯ");
+			trace(evalCheck("ѕѓ†ўџўz") == "ѕѓ†ўџўz");
+			trace(evalCheck("متن درج کریں") == "متن درج کریں");
+
+			trace("ok...");
 
 			// Проверка на корректность бенчмарка
 			var data:String = longText;
-			if(JSSpiderANE.callScriptMethod(bench, data).length != data.length) trace("FAIL!");
+			if(evalCheck(data).length != data.length) trace("FAIL!");
 
 			var j:Object = complexJSON;
-			if(JSSpiderANE.callScriptMethod(bench, j).glossary.GlossDiv.title != j.glossary.GlossDiv.title) trace("FAIL!");
-
-			trace("ok...3");
+			if(evalCheck(j).glossary.GlossDiv.title != j.glossary.GlossDiv.title)
+				trace("FAIL!");
 
 			trace("Benchmarking...");
 			var start_time:int;
@@ -173,26 +109,108 @@
 			start_time = getTimer();
 
 			// Замер количества вызовов:
-			for(var i:int = 0; i < 1000; i++) JSSpiderANE.callScriptMethod(bench, null);
+			for(var i:int = 0; i < 1000; i++) evalCheck(null);
 
-			trace("benchCalls execution time: "+ Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+			trace("benchCalls execution time: "+
+			 Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
 			start_time = getTimer();
 
 			// Замер скорости передачи голого траффика:
-			for(var k:int = 0; k < 1000; k++) JSSpiderANE.callScriptMethod(bench, data);
+			for(var k:int = 0; k < 1000; k++) evalCheck(data);
 
-			trace("benchTraffic execution time: "+ Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+			trace("benchTraffic execution time: "+
+			 Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
 			start_time = getTimer();
 
-			for(var l:int = 0; l < 1000; l++) JSSpiderANE.callScriptMethod(bench, j);
+			for(var l:int = 0; l < 1000; l++) evalCheck(j);
 
 			// Замер скорости передачи сложных объектов:
-			trace("benchJson execution time: "+ Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+			trace("benchJson execution time: "+
+			 Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
 			start_time = getTimer();
 
 			trace("Benchmarks all done in "+ (getTimer()-all_time) + " ms");
 
-			trace("DONE!");
+			trace("Simulation of real case usage...");
+
+			var J:Object = {name: 'cellClick', time: 1234567, params:
+			{cellX: 12, xellY: 34, tool: 'sellTool'}};
+
+			try {
+				JSSpiderANE.evaluateScript(""
+				+"\n	function brc(x){"
+				+"\n		var y = [x];"
+				+"\n		y.length = 30;"
+				+"\n		for(var i = 0; i < 30; i++) {"
+				+"\n			y[i] = x;"
+				+"\n		}"
+				+"\n		return y;"
+				+"\n	}");
+
+				var r = JSSpiderANE.evaluateScript("brc(" + JSON.stringify(J) + ")");
+				if(r[7].params.tool != 'sellTool') trace("FAIL!");
+				//trace(JSON.stringify(r));
+			} catch(e) {
+				trace(e);
+			}
+
+			start_time = getTimer();
+
+			for(var m:int = 0; m < 1000; m++)
+			r = JSSpiderANE.evaluateScript("brc(" + JSON.stringify(J) + ")");
+
+			trace("benchRealCase execution time: "+
+			 Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+
+			var jsonstr:String = "brc(" + JSON.stringify(J) + ")";
+
+			start_time = getTimer();
+			for(var n:int = 0; n < 1000; n++)
+			r = JSSpiderANE.evaluateScript(jsonstr);
+
+			trace("benchRealCase w/precomputed JSON execution time: "+
+			 Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+
+			trace("Testing Environment Object:");
+
+			var envDemoObj:Object = {
+				none: function(/*params:String*/) { return "hello!"; },
+				demo: function(params:String):String {
+					// parse input:
+					trace("demo, params: "+params);
+					var input:Object = JSON.parse(params);
+					var output:Object = { hello: input.a };
+					return JSON.stringify(output);
+				}
+			};
+
+			JSSpiderANE.setScriptEnvironment(envDemoObj);
+
+			try {
+				trace(JSON.stringify(JSSpiderANE.evaluateScript(
+				      "callAIRI('none', 'no params')")));
+
+				//trace(JSON.stringify(JSSpiderANE.evaluateScript(
+				//      "callAIRI('demo', '{a:7}')")));
+			} catch(e) {
+				trace(e);
+			}
+
+			trace("DONE!\n|");
+		}
+
+		private final function evalCheck(src:*):*
+		{
+			return JSSpiderANE.evaluateScript("("+JSON.stringify(src)+")");
+		}
+
+		private final function evalTest(src:String):void
+		{
+			try {
+				trace(JSON.stringify(JSSpiderANE.evaluateScript(src)));
+			} catch(e) {
+				trace(e); // _JAVASCRIPT_ ERRORS!
+			}
 		}
 
 		private var longText:String = ''
@@ -245,7 +263,8 @@
 							"Acronym": "SGML",
 							"Abbrev": "ISO 8879:1986",
 							"GlossDef": {
-								"para": "A meta-markup language, used to create markup languages such as DocBook.",
+								"para": "A meta-markup language, used to create"
+								+" markup languages such as DocBook.",
 								"GlossSeeAlso": ["GML", "XML"]
 							},
 							"GlossSee": "markup"

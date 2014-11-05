@@ -10,12 +10,7 @@
 		8401AD9119F9FEBD00DA07B9 /* FlashRuntimeExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 8401AD9019F9FEBD00DA07B9 /* FlashRuntimeExtensions.h */; };
 		8401AD9319F9FEEF00DA07B9 /* Adobe AIR.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AD9219F9FEEF00DA07B9 /* Adobe AIR.framework */; };
 		8401AEB019FA213C00DA07B9 /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 8401AEAF19FA213C00DA07B9 /* API.m */; };
-		8401AEBB19FA319C00DA07B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84ADA18E19F9FC3B00EA246E /* Foundation.framework */; };
-		8401AEBC19FA31AC00DA07B9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84ADA18F19F9FC3B00EA246E /* CoreData.framework */; };
-		8401AEC319FA39B100DA07B9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AEC219FA39B100DA07B9 /* Foundation.framework */; };
 		8401AEC819FA39B100DA07B9 /* JSSpideriOS.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 8401AEC719FA39B100DA07B9 /* JSSpideriOS.h */; };
-		8401AECA19FA39B100DA07B9 /* JSSpideriOS.m in Sources */ = {isa = PBXBuildFile; fileRef = 8401AEC919FA39B100DA07B9 /* JSSpideriOS.m */; };
-		84027CAC1A010AD40079456C /* libjs_static.armv7s.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1A20119FE9760005EC5EA /* libjs_static.armv7s.a */; };
 		84414FFC19FC00660012B06A /* libjs_static.i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84414FFB19FC00660012B06A /* libjs_static.i386.a */; };
 		84905A5919FB0EB800A5260D /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 8401AEAF19FA213C00DA07B9 /* API.m */; };
 		84905A5B19FB172E00A5260D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AEA819FA07BC00DA07B9 /* libz.dylib */; };
@@ -151,10 +146,9 @@
 		84905B6619FB19A300A5260D /* TypeTraits.h in Headers */ = {isa = PBXBuildFile; fileRef = 84905AE219FB19A200A5260D /* TypeTraits.h */; };
 		84905B6719FB19A300A5260D /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 84905AE319FB19A200A5260D /* Vector.h */; };
 		84905B6819FB19A300A5260D /* WeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 84905AE419FB19A200A5260D /* WeakPtr.h */; };
-		84ADA18C19F9FC3B00EA246E /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84ADA18B19F9FC3B00EA246E /* Cocoa.framework */; };
 		84ADA19619F9FC3B00EA246E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84ADA19419F9FC3B00EA246E /* InfoPlist.strings */; };
-		84B1A1FD19FE96EF005EC5EA /* libjs_static.i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84414FFB19FC00660012B06A /* libjs_static.i386.a */; };
-		84B1A20219FE9760005EC5EA /* libjs_static.armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */; };
+		84B1A1FD19FE96EF005EC5EA /* libjs_static.i386.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84414FFB19FC00660012B06A /* libjs_static.i386.a */; settings = {ATTRIBUTES = (Weak, ); }; };
+		84B1A20219FE9760005EC5EA /* libjs_static.armv7.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */; settings = {ATTRIBUTES = (Weak, ); }; };
 		84CEDC5E1A027B3B0008CF59 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84CEDC5D1A027B3B0008CF59 /* libz.1.2.5.dylib */; };
 /* End PBXBuildFile section */
 
@@ -319,14 +313,11 @@
 		84ADA18B19F9FC3B00EA246E /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		84ADA18E19F9FC3B00EA246E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		84ADA18F19F9FC3B00EA246E /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
-		84ADA19019F9FC3B00EA246E /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
 		84ADA19319F9FC3B00EA246E /* JSSpiderANE-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "JSSpiderANE-Info.plist"; sourceTree = "<group>"; };
 		84ADA19519F9FC3B00EA246E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		84ADA19719F9FC3B00EA246E /* JSSpiderANE-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JSSpiderANE-Prefix.pch"; sourceTree = "<group>"; };
-		84B1A1FE19FE9703005EC5EA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreData.framework; sourceTree = DEVELOPER_DIR; };
 		84B1A20019FE9760005EC5EA /* libjs_static.armv7.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.armv7.a; sourceTree = "<group>"; };
 		84B1A20119FE9760005EC5EA /* libjs_static.armv7s.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.armv7s.a; sourceTree = "<group>"; };
-		84B1A20419FE97FC005EC5EA /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/usr/lib/libz.dylib; sourceTree = DEVELOPER_DIR; };
 		84CEDC5D1A027B3B0008CF59 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/usr/lib/libz.1.2.5.dylib; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
@@ -336,10 +327,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				84CEDC5E1A027B3B0008CF59 /* libz.1.2.5.dylib in Frameworks */,
-				8401AEC319FA39B100DA07B9 /* Foundation.framework in Frameworks */,
 				84B1A1FD19FE96EF005EC5EA /* libjs_static.i386.a in Frameworks */,
 				84B1A20219FE9760005EC5EA /* libjs_static.armv7.a in Frameworks */,
-				84027CAC1A010AD40079456C /* libjs_static.armv7s.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -347,9 +336,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8401AEBC19FA31AC00DA07B9 /* CoreData.framework in Frameworks */,
-				8401AEBB19FA319C00DA07B9 /* Foundation.framework in Frameworks */,
-				84ADA18C19F9FC3B00EA246E /* Cocoa.framework in Frameworks */,
 				84905A5B19FB172E00A5260D /* libz.dylib in Frameworks */,
 				84414FFC19FC00660012B06A /* libjs_static.i386.a in Frameworks */,
 				8401AD9319F9FEEF00DA07B9 /* Adobe AIR.framework in Frameworks */,
@@ -568,8 +554,6 @@
 			isa = PBXGroup;
 			children = (
 				84CEDC5D1A027B3B0008CF59 /* libz.1.2.5.dylib */,
-				84B1A20419FE97FC005EC5EA /* libz.dylib */,
-				84B1A1FE19FE9703005EC5EA /* CoreData.framework */,
 				8401AEA819FA07BC00DA07B9 /* libz.dylib */,
 				8401AD9219F9FEEF00DA07B9 /* Adobe AIR.framework */,
 				84ADA18B19F9FC3B00EA246E /* Cocoa.framework */,
@@ -584,7 +568,6 @@
 			children = (
 				84ADA18E19F9FC3B00EA246E /* Foundation.framework */,
 				84ADA18F19F9FC3B00EA246E /* CoreData.framework */,
-				84ADA19019F9FC3B00EA246E /* AppKit.framework */,
 			);
 			name = "Other Frameworks";
 			sourceTree = "<group>";
@@ -834,7 +817,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				84905A5919FB0EB800A5260D /* API.m in Sources */,
-				8401AECA19FA39B100DA07B9 /* JSSpideriOS.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,14 +845,24 @@
 		8401AEE019FA39B200DA07B9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_STATIC_ANALYZER_MODE = deep;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /tmp/JSSpideriOS.dst;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSSpideriOS/JSSpideriOS-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -879,28 +871,44 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos6.1;
+				SEPARATE_STRIP = YES;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
 		8401AEE119FA39B200DA07B9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_ARC = NO;
+				CLANG_LINK_OBJC_RUNTIME = NO;
+				CLANG_STATIC_ANALYZER_MODE = deep;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /tmp/JSSpideriOS.dst;
+				GCC_ENABLE_CPP_EXCEPTIONS = NO;
+				GCC_ENABLE_CPP_RTTI = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = NO;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "JSSpideriOS/JSSpideriOS-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/admin/Documents/github/Spidermonkey/js/src/build-ios",
 					"$(PROJECT_DIR)",
 				);
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = iphoneos6.1;
+				SEPARATE_STRIP = YES;
 				SKIP_INSTALL = YES;
+				STRIP_STYLE = all;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -981,6 +989,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_STATIC_ANALYZER_MODE = deep;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1004,6 +1013,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -1012,6 +1022,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_STATIC_ANALYZER_MODE = deep;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -1036,6 +1047,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				RUN_CLANG_STATIC_ANALYZER = YES;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
