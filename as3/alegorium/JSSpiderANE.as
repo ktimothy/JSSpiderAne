@@ -37,12 +37,22 @@ package alegorium
 			try {
 				_context =
 				ExtensionContext.createExtensionContext("alegorium.ane.JSSpiderANE",
-				                                        "");
+														"");
+
+				_context.actionScriptData = new MethodHolder();
 
 				if (_exceptionListener)
 				{
 					_context.addEventListener(StatusEvent.STATUS,_exceptionListener);
 				}
+
+				evaluateScript(""
+							+"function callAIR(name, params)						"
+							+"{														"
+							+"	return JSON.parse(									"
+							+"			callAIRI(									"
+							+"			JSON.stringify({name:name,data:params})));	"
+							+"}");
 			} catch(error:Error) { trace(error) }
 			return _context;
 		}
@@ -66,7 +76,7 @@ package alegorium
 		 *               }}
 		 */
 		public static function setScriptEnvironment(object:Object):void {
-			getContext().actionScriptData = object;
+			(getContext().actionScriptData as MethodHolder).holder = object;
 		}
 
 		public static function evaluateScript(script:String):Object
@@ -90,6 +100,36 @@ package alegorium
 			if(_context == null) return ;
 			_context.dispose();
 			_context = null;
+		}
+	}
+}
+
+internal final class MethodHolder
+{
+	public var holder:Object = null;
+	private var _result:Object;
+
+	public function get run():String
+	{
+		return JSON.stringify(_result);
+	}
+
+	public function set run(json:String):void
+	{
+		if(!holder) throw "Script environment is not defined";
+		var callInfo:Object = JSON.parse(json);
+
+		try
+		{
+			_result = {
+				result :
+				holder[callInfo.name].call(holder, callInfo.data),
+				error : null
+			};
+		}
+		catch(error:Error)
+		{
+			_result = { error : error.message, result : null };
 		}
 	}
 }
