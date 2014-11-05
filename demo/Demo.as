@@ -7,6 +7,8 @@
 	import flash.text.TextField;
 	import flash.utils.getTimer;
 	import flash.events.StatusEvent;
+	import flash.text.TextFormat;
+	import flash.text.TextFormatAlign;
 
 	public class Demo extends MovieClip {
 
@@ -16,23 +18,45 @@
 			loaderInfo.uncaughtErrorEvents.addEventListener (
 				UncaughtErrorEvent.UNCAUGHT_ERROR, function(event:UncaughtErrorEvent)
 				{
-					text.appendText("\n"+event);
+					textField.appendText("\n"+event);
 					event.preventDefault();
 					event.stopImmediatePropagation();
 					event.stopPropagation();
 				}
 			);
+			createTextField();
 		}
 
-		public final function trace(x:*)
+		private static var textField;
+
+		public static function trace(x:*)
 		{
-			text.appendText("\n"+x);
+			textField.appendText("\n"+x);
 		}
 
 		public final function onException(e:StatusEvent):void
 		{
 			trace("Exception internally from JS...");
 			trace(e.code);
+		}
+
+		private final function createTextField():void
+		{
+			textField = new TextField();
+			textField.x = 3;
+			textField.y = 5;
+			textField.border = true;
+			textField.width = 540;
+			textField.height = 387;
+			textField.wordWrap = true;
+
+			var myFormat:TextFormat = new TextFormat();
+			myFormat.size = 18;
+			myFormat.align = TextFormatAlign.LEFT;
+
+			textField.defaultTextFormat = myFormat;
+			textField.text = ">";
+			addChild(textField);
 		}
 
 		public final function demo(a) {
