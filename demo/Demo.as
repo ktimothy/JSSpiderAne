@@ -14,13 +14,13 @@
 			// Чтобы не портить данные телеметрии, лучше запустить со второго фрейма
 			addEventListener(Event.ENTER_FRAME, demo);
 			loaderInfo.uncaughtErrorEvents.addEventListener (
-                UncaughtErrorEvent.UNCAUGHT_ERROR, function(event:UncaughtErrorEvent)
-                {
+				UncaughtErrorEvent.UNCAUGHT_ERROR, function(event:UncaughtErrorEvent)
+				{
 					text.appendText("\n"+event);
 					event.preventDefault();
 					event.stopImmediatePropagation();
 					event.stopPropagation();
-                }
+				}
 			);
 		}
 
@@ -174,24 +174,31 @@
 			trace("Testing Environment Object:");
 
 			var envDemoObj:Object = {
-				none: function(/*params:String*/) { return "hello!"; },
-				demo: function(params:String):String {
-					// parse input:
-					trace("demo, params: "+params);
-					var input:Object = JSON.parse(params);
-					var output:Object = { hello: input.a };
-					return JSON.stringify(output);
-				}
+				doString: function(params:Object):String { return "hello!"; },
+				doInt: function(params:Object):int { return params.hello + 42; },
+				doArray: function(params:Object):Array { return [params]; },
+				doObject: function(params:Object):Object { return {params:params}; }
 			};
 
 			JSSpiderANE.setScriptEnvironment(envDemoObj);
 
 			try {
-				trace(JSON.stringify(JSSpiderANE.evaluateScript(
-				      "callAIRI('none', 'no params')")));
 
-				//trace(JSON.stringify(JSSpiderANE.evaluateScript(
-				//      "callAIRI('demo', '{a:7}')")));
+				trace("doString: " + JSON.stringify(JSSpiderANE.evaluateScript(
+					  "callAIR('doString', {hello:77})")));
+
+				trace("doInt: " + JSON.stringify(JSSpiderANE.evaluateScript(
+					  "callAIR('doInt', {hello:77})")));
+
+				trace("doArray: " + JSON.stringify(JSSpiderANE.evaluateScript(
+					  "callAIR('doArray', {hello:77})")));
+
+				trace("doObject: " + JSON.stringify(JSSpiderANE.evaluateScript(
+					  "callAIR('doObject', {hello:77})")));
+
+				trace("doError: " + JSON.stringify(JSSpiderANE.evaluateScript(
+					  "callAIR('doError', {hello:77})")));
+
 			} catch(e) {
 				trace(e);
 			}
