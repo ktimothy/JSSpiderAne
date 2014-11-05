@@ -54,23 +54,39 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
 
 JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 {
+	goto runFunc;
+	
+// internal exceptions handling
+	
+	char buffError[4096];
+	char * error;
+	
+internalException:
+	if(!error) error = (char *)"internal exception";
+	
+	sprintf(buffError, "%s%s%s", "{ \"result\": null, \"error\": \"", error, "\" }");
+	
+	JSString * errorStr;
+	errorStr = JS_NewStringCopyZ(cx, (const char*)buffError);
+	
+	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(errorStr));
+	return JS_TRUE;
+	
+runFunc:
+	error = NULL;
+	
 	// get arguments
-	JSString* name;
 	JSString* params;
 
-	char *cname;
 	char *cparams;
 	size_t cparams_size;
 
-	if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "SS", &name, &params)) return false;
+	if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &params)) { error = (char *)"JS_ConvertArguments failed"; goto internalException; }
 
-	cname = JS_EncodeString(cx, name);
 	cparams = JS_EncodeString(cx, params);
 	cparams_size = JS_GetStringEncodingLength(cx, params);
+	
 
-
-	DISPATCH_STATUS_EVENT(contextCache, cname, "error");
-	DISPATCH_STATUS_EVENT(contextCache, cparams, "error");
 
 	const uint8_t *cresult;
 	uint32_t cresult_size;
@@ -82,15 +98,14 @@ JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 	// call AS3
 	FREObject freas3, freresult, thrownException;
 
-	FRENewObjectFromUTF8(4, (const uint8_t*)"null", &freresult);
 
 	auto isOk = FREGetContextActionScriptData(contextCache, &freas3);
 
-	if(isOk == FRE_WRONG_THREAD) DISPATCH_STATUS_EVENT(contextCache, "FREGetContextActionScriptData FRE_WRONG_THREAD", "error"); else
-	if(isOk == FRE_INVALID_ARGUMENT) DISPATCH_STATUS_EVENT(contextCache, "FREGetContextActionScriptData FRE_INVALID_ARGUMENT", "error");
+	if(isOk == FRE_WRONG_THREAD) { error = (char *)"FREGetContextActionScriptData FRE_WRONG_THREAD"; goto internalException; } else
+	if(isOk == FRE_INVALID_ARGUMENT) { error = (char *)"FREGetContextActionScriptData FRE_INVALID_ARGUMENT"; goto internalException; }
 
 	FRESetObjectProperty(freas3,
-						 (const uint8_t*)cname,
+						 (const uint8_t*)"run",
 						 freparams,
 						 &thrownException
 						 );
@@ -99,25 +114,26 @@ JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
 
 	isOk = FREGetObjectType(freas3, &type);
 
-	if(type != FRE_TYPE_OBJECT) DISPATCH_STATUS_EVENT(contextCache, "FREGetObjectType is NOT FRE_TYPE_OBJECT", "error");
-	if(isOk != FRE_OK) DISPATCH_STATUS_EVENT(contextCache, "FREGetObjectType failed", "error");
+	if(type != FRE_TYPE_OBJECT) { error = (char *)"FREGetObjectType is NOT FRE_TYPE_OBJECT"; goto internalException; }
+	if(isOk != FRE_OK) { error = (char *)"FREGetObjectType failed"; goto internalException; }
 
 	isOk = FREGetObjectProperty(freas3,
-						 (const uint8_t*)cname,
+						 (const uint8_t*)"run",
 						 &freresult,
 						 &thrownException
 						 );
 
 	if(isOk != FRE_OK) {
-		if(isOk == FRE_NO_SUCH_NAME) DISPATCH_STATUS_EVENT(contextCache, "FRE_NO_SUCH_NAME", "error");
-		if(isOk == FRE_INVALID_OBJECT) DISPATCH_STATUS_EVENT(contextCache, "FRE_INVALID_OBJECT", "error");
-		if(isOk == FRE_TYPE_MISMATCH) DISPATCH_STATUS_EVENT(contextCache, "FRE_TYPE_MISMATCH", "error");
-		if(isOk == FRE_ACTIONSCRIPT_ERROR) DISPATCH_STATUS_EVENT(contextCache, "FRE_ACTIONSCRIPT_ERROR", "error");
-		if(isOk == FRE_INVALID_ARGUMENT) DISPATCH_STATUS_EVENT(contextCache, "FRE_INVALID_ARGUMENT", "error");
-		if(isOk == FRE_READ_ONLY) DISPATCH_STATUS_EVENT(contextCache, "FRE_READ_ONLY", "error");
-		if(isOk == FRE_WRONG_THREAD) DISPATCH_STATUS_EVENT(contextCache, "FRE_WRONG_THREAD", "error");
-		if(isOk == FRE_ILLEGAL_STATE) DISPATCH_STATUS_EVENT(contextCache, "FRE_ILLEGAL_STATE", "error");
-		if(isOk == FRE_INSUFFICIENT_MEMORY) DISPATCH_STATUS_EVENT(contextCache, "FRE_INSUFFICIENT_MEMORY", "error");
+		if(isOk == FRE_NO_SUCH_NAME) error = (char *)"FRE_NO_SUCH_NAME";
+		if(isOk == FRE_INVALID_OBJECT) error = (char *)"FRE_INVALID_OBJECT";
+		if(isOk == FRE_TYPE_MISMATCH) error = (char *)"FRE_TYPE_MISMATCH";
+		if(isOk == FRE_ACTIONSCRIPT_ERROR) error = (char *)"FRE_ACTIONSCRIPT_ERROR";
+		if(isOk == FRE_INVALID_ARGUMENT) error = (char *)"FRE_INVALID_ARGUMENT";
+		if(isOk == FRE_READ_ONLY) error = (char *)"FRE_READ_ONLY";
+		if(isOk == FRE_WRONG_THREAD) error = (char *)"FRE_WRONG_THREAD";
+		if(isOk == FRE_ILLEGAL_STATE) error = (char *)"FRE_ILLEGAL_STATE";
+		if(isOk == FRE_INSUFFICIENT_MEMORY) error = (char *)"FRE_INSUFFICIENT_MEMORY";
+		goto internalException;
 	}
 
 	// convert result
