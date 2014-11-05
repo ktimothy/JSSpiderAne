@@ -227,6 +227,16 @@
 				trace(e);
 			}
 
+			trace("Benchmarking Environment Object:");
+
+			start_time = getTimer();
+
+			for(var u:int = 0; u < 1000; u++)
+			JSSpiderANE.evaluateScript("callAIR('doInt',{hello:77})");
+
+			trace("benchEnvObj execution time: "+
+			 Math.round(1000*1000/(getTimer()-start_time)) + " op/sec");
+
 			trace("DONE!\n|");
 		}
 
