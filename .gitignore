@@ -59,3 +59,5 @@ projects/android/so_arm/jni/libjs_staticARM7.a
 projects/android/so_x86/jni/libjs_static.a
 
 projects/win32/*
+
+projects/xcode/JSSpiderANE/JSSpiderANE.xcodeproj/project.xcworkspace/xcuserdata/admin.xcuserdatad/UserInterfaceState.xcuserstate
