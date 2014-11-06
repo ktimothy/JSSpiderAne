@@ -52,7 +52,7 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
 	DISPATCH_STATUS_EVENT(contextCache, buffError, "error");
 }
 
-JSBool myjs_airi(JSContext *cx, unsigned int argc, jsval *vp)
+JSBool callAIRI(JSContext *cx, unsigned int argc, jsval *vp)
 {
 	goto runFunc;
 	
@@ -144,7 +144,7 @@ runFunc:
 	return JS_TRUE;
 }
 
-JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", myjs_airi, 2, 0), JS_FS_END };
+JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", callAIRI, 2, 0), JS_FS_END };
 
 extern "C" {
 DEFINE_ANE_FUNCTION(eval)
