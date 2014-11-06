@@ -51,4 +51,4 @@ How To Automate FULL (Re-)Build
 
 - Change configure/*.txt
 - Just execute build.sh in build folder
-- Requires Mac 5K Retina, XCode, Android NDK, AIR SDK / Apache Flex, GCC
+- Requires Mac 5K Retina, XCode, iOS 6.1+7.1 SDK, Android NDK, AIR SDK / Apache Flex, GCC
