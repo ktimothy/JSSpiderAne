@@ -1,0 +1,3 @@
+[submodule "Spidermonkey"]
+	path = Spidermonkey
+	url = https://github.com/PeyTy/Spidermonkey.git
