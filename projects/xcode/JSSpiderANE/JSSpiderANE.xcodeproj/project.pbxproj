@@ -890,10 +890,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/admin/Documents/github/Spidermonkey/js/src/build-ios",
 					"$(PROJECT_DIR)",
-					"/Users/admin/Documents/github/SpiderMonkey-AIR-ANE/Spidermonkey/js/src/build-ane-ios-x86",
-					"/Users/admin/Documents/github/SpiderMonkey-AIR-ANE/Spidermonkey/js/src/build-ane-ios-armv7",
+					"$(PROJECT_DIR)/../../../Spidermonkey/js/src/build-ane-ios-x86",
+					"$(PROJECT_DIR)/../../../Spidermonkey/js/src/build-ane-ios-armv7",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -924,10 +923,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
-					"/Users/admin/Documents/github/Spidermonkey/js/src/build-ios",
 					"$(PROJECT_DIR)",
-					"/Users/admin/Documents/github/SpiderMonkey-AIR-ANE/Spidermonkey/js/src/build-ane-ios-x86",
-					"/Users/admin/Documents/github/SpiderMonkey-AIR-ANE/Spidermonkey/js/src/build-ane-ios-armv7",
+					"$(PROJECT_DIR)/../../../Spidermonkey/js/src/build-ane-ios-x86",
+					"$(PROJECT_DIR)/../../../Spidermonkey/js/src/build-ane-ios-armv7",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -1035,9 +1033,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"/Users/admin/Documents/github/Spidermonkey/js/src/build-osx-32",
-					"/Users/admin/Documents/github/Spidermonkey/js/src/build-ios",
-					"/Users/admin/Documents/github/SpiderMonkey-AIR-ANE/Spidermonkey/js/src/build-ane-osx-x86",
+					"$(PROJECT_DIR)/../../../Spidermonkey/js/src/build-ane-osx-x86",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = NO;
@@ -1070,9 +1066,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"/Users/admin/Documents/github/Spidermonkey/js/src/build-osx-32",
-					"/Users/admin/Documents/github/Spidermonkey/js/src/build-ios",
-					"/Users/admin/Documents/github/SpiderMonkey-AIR-ANE/Spidermonkey/js/src/build-ane-osx-x86",
+					"$(PROJECT_DIR)/../../../Spidermonkey/js/src/build-ane-osx-x86",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
