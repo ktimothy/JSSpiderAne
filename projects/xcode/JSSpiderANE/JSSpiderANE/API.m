@@ -55,26 +55,26 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
 JSBool callAIRI(JSContext *cx, unsigned int argc, jsval *vp)
 {
 	goto runFunc;
-	
+
 // internal exceptions handling
-	
+
 	char buffError[4096];
 	char * error;
-	
+
 internalException:
 	if(!error) error = (char *)"internal exception";
-	
+
 	sprintf(buffError, "%s%s%s", "{ \"result\": null, \"error\": \"", error, "\" }");
-	
+
 	JSString * errorStr;
 	errorStr = JS_NewStringCopyZ(cx, (const char*)buffError);
-	
+
 	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(errorStr));
 	return JS_TRUE;
-	
+
 runFunc:
 	error = NULL;
-	
+
 	// get arguments
 	JSString* params;
 
@@ -85,7 +85,7 @@ runFunc:
 
 	cparams = JS_EncodeString(cx, params);
 	cparams_size = JS_GetStringEncodingLength(cx, params);
-	
+
 
 
 	const uint8_t *cresult;
@@ -144,7 +144,6 @@ runFunc:
 	return JS_TRUE;
 }
 
-JSFunctionSpec myjs_global_functions[] = { JS_FS("callAIRI", callAIRI, 2, 0), JS_FS_END };
 
 extern "C" {
 DEFINE_ANE_FUNCTION(eval)
@@ -247,7 +246,7 @@ void ExtensionContextInitializer(void* extData,
 	JSAutoCompartment ac(cx, _global);
 	JS_InitStandardClasses(cx, _global);
 
-	JS_DefineFunctions(cx, _global, myjs_global_functions);
+	JS_DefineFunction(cx, _global, (const char *)"callAIRI", callAIRI, 1, 0);
 
 	global = &_global;
 
