@@ -9,11 +9,12 @@ package alegorium
 		private static var _exceptionListener:Function = null;
 
 		public function JSSpiderANE(){
-			throw "JSSpiderANE instantiation disallowed";
+			throw "JSSpiderANE instantiation is not allowed";
 		}
 
 		/**
 		 * Sets the exception listener
+		 *
 		 * @param listener Listener function that takes e:StatusEvent as argument
 		 */
 		public static function setExceptionListener(listener:Function):void
@@ -34,55 +35,55 @@ package alegorium
 		private static function getContext():ExtensionContext
 		{
 			if(_context != null) return _context;
-			try {
-				_context =
-				ExtensionContext.createExtensionContext("alegorium.ane.JSSpiderANE",
-														"");
+			_context =
+			ExtensionContext.createExtensionContext("alegorium.ane.JSSpiderANE",
+													"");
 
-				_context.actionScriptData = new MethodHolder();
+			_context.actionScriptData = new MethodHolder();
 
-				if (_exceptionListener)
-				{
-					_context.addEventListener(StatusEvent.STATUS,_exceptionListener);
-				}
+			if (_exceptionListener)
+			{
+				_context.addEventListener(StatusEvent.STATUS,_exceptionListener);
+			}
 
-				evaluateScript(""
-							+"function callAIR(name, params)						"
-							+"{														"
-							+"	return JSON.parse(									"
-							+"			callAIRI(									"
-							+"			JSON.stringify({name:name,data:params})));	"
-							+"}");
-			} catch(error:Error) { trace(error) }
+			evaluateScript(""
+						+"function callAIR(name, params)						"
+						+"{														"
+						+"	return JSON.parse(									"
+						+"			callAIRI(									"
+						+"			JSON.stringify({name:name,data:params})));	"
+						+"}");
 			return _context;
 		}
 
 		public static function get isSupported():Boolean
 		{
-			return getContext() != null;
+			try
+			{
+				return getContext() != null;
+			}
+			catch(error:Error)
+			{
+				trace(error);
+			}
+			return false;
 		}
 
 		/**
 		 * Specify object of AS3-environment to be accessed from JS
-		 * @param object Объект окружения, с перечислением доступных
-		 *               AS3-функций, вида:
-		 *               { func: function(params:String):String {
-		 *               	// Данные необходимо обработать:
-		 *               	var input:Object = JSON.parse(params);
-		 *               	...
-		 *               	// Результатом выражения есть строка
-		 *               	// или закодированный JSON-объект:
-		 *               	return JSONHelper.convert(output);
-		 *               }}
+		 *
+		 * @param object Object, with enumeration of functions
 		 */
-		public static function setScriptEnvironment(object:Object):void {
+		public static function setScriptEnvironment(object:Object):void
+		{
 			(getContext().actionScriptData as MethodHolder).holder = object;
 		}
 
 		public static function evaluateScript(script:String):Object
 		{
 			if(_context == null) getContext();
-			var callResultString:String = _context.call("eval",script) as String;
+
+			var callResultString:String = _context.call("eval", script) as String;
 			var callResult:Object = JSON.parse(callResultString);
 
 			if(callResult.error)
@@ -96,8 +97,10 @@ package alegorium
 		/**
 		 * Frees extension memory and unloads JS engine
 		 */
-		public static function dispose():void {
+		public static function dispose():void
+		{
 			if(_context == null) return ;
+
 			_context.dispose();
 			_context = null;
 		}
@@ -106,7 +109,7 @@ package alegorium
 
 internal final class MethodHolder
 {
-	public var holder:Object = null;
+	public var holder:Object;
 	private var _result:Object;
 
 	public function get run():String
@@ -116,20 +119,25 @@ internal final class MethodHolder
 
 	public function set run(json:String):void
 	{
-		if(!holder) throw "Script environment is not defined";
 		var callInfo:Object = JSON.parse(json);
 
-		try
+		if(holder != null)
 		{
-			_result = {
-				result :
-				holder[callInfo.name].call(holder, callInfo.data),
-				error : null
-			};
-		}
-		catch(error:Error)
-		{
-			_result = { error : error.message, result : null };
-		}
+			try
+			{
+				_result = {
+					result :
+					holder[callInfo.name](callInfo.data),
+					error : null
+				};
+			}
+			catch(error:Error)
+			{
+				_result = { error : error.message, result : null };
+			}
+		} else _result = {
+			error : "Script environment was not specified",
+			result : null
+		};
 	}
 }
