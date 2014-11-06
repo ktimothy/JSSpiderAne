@@ -11,7 +11,7 @@ LOCAL_LDLIBS    := -llog -lstdc++ -lz
 LOCAL_SRC_FILES := ../../so_cpp/APIU.cpp
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../so_cpp/include
 
-APP_ABI := armeabi-v7a armeabi
+APP_ABI := armeabi-v7a
 LOCAL_STATIC_LIBRARIES := libjs_static-prebuilt
 LOCAL_SHARED_LIBRARIES := FlashRuntimeExtensions-prebuilt
 
