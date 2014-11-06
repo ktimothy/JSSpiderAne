@@ -17,6 +17,11 @@ There are plans to support platforms such as mac, windows, ios and android.
 
 Download the **ane** file and take a look at the **demo** folder. It's very simple!
 
+If you want to build this repo:
+```
+git clone --recursive git://github.com/PeyTy/SpiderMonkey-AIR-ANE.git
+```
+
 Supported Platforms
 =====
 
