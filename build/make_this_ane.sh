@@ -86,6 +86,14 @@ cp -rf "library.swf" "android/libs/x86/library.swf"
 
 echo "GENERATING ANE"
 
+# Only Mac
+#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac .
+
+# Mac & iOS Sim
+#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform iPhone-x86 -C ./ios/ . -platformoptions platformoptions.xml
+
+# Mac & iOS & iOS Sim
+#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
 #Mac, iOS & Android
 $ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform Android-ARM -C ./android/libs/armeabi-v7a . -platform Android-x86 -C ./android/libs/x86 . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
 
