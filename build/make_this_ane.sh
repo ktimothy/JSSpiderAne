@@ -41,8 +41,11 @@ cat extension.xml | sed -e "s/$SEARCH/$REPLACE/g" >> ./temp/extension.xml
 cp platformoptions.xml ./temp/
 
 # Copy binaries:
-mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a ./temp/ios/JSSpiderANE386.a
-mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a ./temp/ios/JSSpiderANE.a
+mkdir -p temp/ios/x86
+mkdir -p temp/ios/armv7
+
+mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a ./temp/ios/x86/JSSpiderANE386.a
+mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a ./temp/ios/armv7/JSSpiderANE.a
 mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework ./temp/mac/JSSpiderANE.framework
 
 # android:
@@ -80,7 +83,8 @@ sleep 0
 [[ -f "catalog.xml" ]] && rm -f "catalog.xml"
 
 cp -rf "library.swf" "mac/library.swf"
-cp -rf "library.swf" "ios/library.swf"
+cp -rf "library.swf" "ios/x86/library.swf"
+cp -rf "library.swf" "ios/armv7/library.swf"
 cp -rf "library.swf" "android/libs/armeabi-v7a/library.swf"
 cp -rf "library.swf" "android/libs/x86/library.swf"
 
@@ -95,7 +99,7 @@ echo "GENERATING ANE"
 # Mac & iOS & iOS Sim
 #$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
 #Mac & iOS & iOS Sim & Android
-$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform Android-ARM -C ./android/libs/armeabi-v7a . -platform Android-x86 -C ./android/libs/x86 . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
+$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform Android-ARM -C ./android/libs/armeabi-v7a . -platform Android-x86 -C ./android/libs/x86 . -platform iPhone-x86 -C ./ios/x86/ . -platform iPhone-ARM -C ./ios/armv7/ . -platformoptions platformoptions.xml
 
 
 sleep 0
@@ -108,8 +112,8 @@ mv $ANENAME.ane ../../ane/
 cd ..
 
 mv -f ./temp/mac/JSSpiderANE.framework ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework
-mv -f ./temp/ios/JSSpiderANE386.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a
-mv -f ./temp/ios/JSSpiderANE.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a
+mv -f ./temp/ios/x86/JSSpiderANE386.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a
+mv -f ./temp/ios/armv7/JSSpiderANE.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a
 rm -rf temp
 
 echo "DONE!"
