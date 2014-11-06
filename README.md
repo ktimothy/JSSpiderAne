@@ -32,10 +32,6 @@ How To Build SpiderMonkey
 - Execute build/build_sm.sh
 - Wait...
 - Done!
-- clone this https://github.com/ricardoquesada/Spidermonkey
-- cd Spidermonkey / js / src / build-* /
-- ../configure
-- run Spidermonkey / js / src / build-* / build.sh
 
 How To Build ANE
 =====
@@ -44,9 +40,6 @@ How To Build ANE
 - Execute build/build_ane.sh
 - Build scripts uses chaching for speed-up of builds
 - Here is ane/JSSpiderANE.ane
-- SpiderMonkey-AIR-ANE / projects / * / README.md
-- SpiderMonkey-AIR-ANE / build / README.md
-- run SpiderMonkey-AIR-ANE / build / make\_this\_ane.sh
 
 How To Automate FULL (Re-)Build
 =====
