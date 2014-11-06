@@ -1,7 +1,11 @@
 #!/bin/bash
 
 echo ""
-echo ""
+echo "Making ANE..."
+
+# Find current location:
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+CD=$DIR
 
 # Find any simulator SDK
 cd "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/"
@@ -13,15 +17,13 @@ PLATSDK="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.pl
 echo "PLATSDK: $PLATSDK"
 
 # Go into current location:
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-CD=$DIR
 cd $CD
 echo "CD: $CD"
 
 # Load SDK configuration:
-ADT="$(<configure.adt)"
+ADT="$(<./configure/air.sdk.txt)/bin/adt"
 echo "ADT: $ADT"
-ACOMPC="$(<configure.acompc)"
+ACOMPC="$(<./configure/air.sdk.txt)/bin/acompc"
 echo "ACOMPC: $ACOMPC"
 
 # Clean & Copy files:

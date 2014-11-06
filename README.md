@@ -3,7 +3,7 @@ SpiderMonkey-AIR-ANE
 
 Javascript for Adobe AIR. Also, please **read this README**!
 
-State: *Pre-alpha. Keep calm and wait for updates*
+State: *Alpha. Keep calm and wait for updates*
 =====
 
 This Open-Source project is funded personally by [Denis Novozhilov](https://github.com/gloomybrain).
@@ -21,7 +21,7 @@ Supported Platforms
 =====
 
 - Mac 32bit
-- iOS 32bit
+- iOS 6+7+8 32bit
 - iOS Sim 32bit
 - Android ARMv7
 - Android x86
@@ -29,6 +29,9 @@ Supported Platforms
 How To Build SpiderMonkey
 =====
 
+- Execute build/build_sm.sh
+- Wait...
+- Done!
 - clone this https://github.com/ricardoquesada/Spidermonkey
 - cd Spidermonkey / js / src / build-* /
 - ../configure
@@ -37,6 +40,17 @@ How To Build SpiderMonkey
 How To Build ANE
 =====
 
+- Change configure/*.txt
+- Execute build/build_ane.sh
+- Build scripts uses chaching for speed-up of builds
+- Here is ane/JSSpiderANE.ane
 - SpiderMonkey-AIR-ANE / projects / * / README.md
 - SpiderMonkey-AIR-ANE / build / README.md
 - run SpiderMonkey-AIR-ANE / build / make\_this\_ane.sh
+
+How To Automate FULL (Re-)Build
+=====
+
+- Change configure/*.txt
+- Just execute build.sh in build folder
+- Requires Mac 5K Retina, XCode, Android NDK, AIR SDK / Apache Flex, GCC
