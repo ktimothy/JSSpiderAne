@@ -42,6 +42,7 @@ RootedObject * global = NULL;
 JSObject * globalObj = NULL;
 char buffError[4096];
 FREContext contextCache;
+JSFunction *stringifyFun;
 
 // The error reporter callback.
 void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
@@ -173,27 +174,24 @@ DEFINE_ANE_FUNCTION(eval)
 	// Stringify result to JSON string
 	JS::Value rval2;
 
-	JSObject * JSONObj = JS_NewObject(cx, NULL, NULL, NULL);
-	JS::Value JSONValue = OBJECT_TO_JSVAL(JSONObj);
-	JS::MutableHandle<JS::Value> JSON = MutableHandleValue::fromMarkedLocation(&JSONValue);
-	if(!JS_GetProperty(cx, globalObj, (const char *)"JSON", JSON))
-	{
-		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_GetProperty failed\"}", &retVal);
-		return retVal;
-	}
+	if(!stringifyFun) {
 
-	JSObject * stringifyObj = JS_NewObject(cx, NULL, NULL, NULL);
-	JS::Value stringifyValue = OBJECT_TO_JSVAL(stringifyObj);
-	JS::MutableHandle<JS::Value> stringify = MutableHandleValue::fromMarkedLocation(&stringifyValue);
-	if(!JS_GetProperty(cx, &JSON.toObject(), (const char *)"stringify", stringify))
-	{
-		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_GetProperty stringify failed\"}", &retVal);
-		return retVal;
+		JSObject * JSONObj = JS_NewObject(cx, NULL, NULL, NULL);
+		JS::Value JSONValue = OBJECT_TO_JSVAL(JSONObj);
+		JS::MutableHandle<JS::Value> JSON = MutableHandleValue::fromMarkedLocation(&JSONValue);
+		JS_GetProperty(cx, globalObj, (const char *)"JSON", JSON);
+
+		JSObject * stringifyObj = JS_NewObject(cx, NULL, NULL, NULL);
+		JS::Value stringifyValue = OBJECT_TO_JSVAL(stringifyObj);
+		JS::MutableHandle<JS::Value> stringify = MutableHandleValue::fromMarkedLocation(&stringifyValue);
+		JS_GetProperty(cx, &JSON.toObject(), (const char *)"stringify", stringify);
+
+		stringifyFun = JS_ValueToFunction(cx, stringify);
 	}
 
 	JS::Value argvs[1] = { resultContainerValue };
 
-	JS_CallFunction(cx, globalObj, JS_ValueToFunction(cx, stringify), 1, argvs, &rval2);
+	JS_CallFunction(cx, globalObj, stringifyFun, 1, argvs, &rval2);
 
 	JSString *str = rval2.toString();
 
