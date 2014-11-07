@@ -47,11 +47,12 @@ package alegorium
 			}
 
 			evaluateScript(""
-						+"function callAIR(name, params)						"
-						+"{														"
-						+"	return JSON.parse(									"
-						+"			callAIRI(									"
-						+"			JSON.stringify({name:name,data:params})));	"
+						+"function callAIR(name, params)"
+						+"{	var r = JSON.parse(	"
+						+"callAIRI(	"
+						+"JSON.stringify({name:name,data:params})));"
+						+"	if(r.error) throw r.error;"
+						+"	return 	r.result;"
 						+"}");
 			return _context;
 		}
@@ -131,9 +132,9 @@ internal final class MethodHolder
 					error : null
 				};
 			}
-			catch(error:Error)
+			catch(error)
 			{
-				_result = { error : error.message, result : null };
+				_result = { error : String(error), result : null };
 			}
 		} else _result = {
 			error : "Script environment was not specified",

@@ -52,41 +52,27 @@ void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
 	DISPATCH_STATUS_EVENT(contextCache, buffError, "error");
 }
 
+JSBool returnError(JSContext *cx, const char* message) {
+	JSString * errorStr;
+	errorStr = JS_NewStringCopyZ(cx, (const char*)message);
+	Value errorStrVal = STRING_TO_JSVAL(errorStr);
+	JS::HandleValue errorHandle = HandleValue::fromMarkedLocation(&errorStrVal);
+	JS_SetPendingException( cx, errorHandle );
+	return JS_FALSE;
+}
+
 JSBool callAIRI(JSContext *cx, unsigned int argc, jsval *vp)
 {
-	goto runFunc;
-
-// internal exceptions handling
-
-	char buffError[4096];
-	char * error;
-
-internalException:
-	if(!error) error = (char *)"internal exception";
-
-	sprintf(buffError, "%s%s%s", "{ \"result\": null, \"error\": \"", error, "\" }");
-
-	JSString * errorStr;
-	errorStr = JS_NewStringCopyZ(cx, (const char*)buffError);
-
-	JS_SET_RVAL(cx, vp, STRING_TO_JSVAL(errorStr));
-	return JS_TRUE;
-
-runFunc:
-	error = NULL;
-
 	// get arguments
 	JSString* params;
 
 	char *cparams;
 	size_t cparams_size;
 
-	if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &params)) { error = (char *)"JS_ConvertArguments failed"; goto internalException; }
+	if (!JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &params)) return returnError(cx, "JS_ConvertArguments failed");
 
 	cparams = JS_EncodeString(cx, params);
 	cparams_size = JS_GetStringEncodingLength(cx, params);
-
-
 
 	const uint8_t *cresult;
 	uint32_t cresult_size;
@@ -98,11 +84,10 @@ runFunc:
 	// call AS3
 	FREObject freas3, freresult, thrownException;
 
-
 	auto isOk = FREGetContextActionScriptData(contextCache, &freas3);
 
-	if(isOk == FRE_WRONG_THREAD) { error = (char *)"FREGetContextActionScriptData FRE_WRONG_THREAD"; goto internalException; } else
-	if(isOk == FRE_INVALID_ARGUMENT) { error = (char *)"FREGetContextActionScriptData FRE_INVALID_ARGUMENT"; goto internalException; }
+	if(isOk == FRE_WRONG_THREAD) return returnError(cx, "FREGetContextActionScriptData FRE_WRONG_THREAD"); else
+	if(isOk == FRE_INVALID_ARGUMENT) return returnError(cx, "FREGetContextActionScriptData FRE_INVALID_ARGUMENT");
 
 	FRESetObjectProperty(freas3,
 						 (const uint8_t*)"run",
@@ -114,8 +99,8 @@ runFunc:
 
 	isOk = FREGetObjectType(freas3, &type);
 
-	if(type != FRE_TYPE_OBJECT) { error = (char *)"FREGetObjectType is NOT FRE_TYPE_OBJECT"; goto internalException; }
-	if(isOk != FRE_OK) { error = (char *)"FREGetObjectType failed"; goto internalException; }
+	if(type != FRE_TYPE_OBJECT) return returnError(cx, "FREGetObjectType is NOT FRE_TYPE_OBJECT");
+	if(isOk != FRE_OK) return returnError(cx, "FREGetObjectType failed");
 
 	isOk = FREGetObjectProperty(freas3,
 						 (const uint8_t*)"run",
@@ -124,16 +109,15 @@ runFunc:
 						 );
 
 	if(isOk != FRE_OK) {
-		if(isOk == FRE_NO_SUCH_NAME) error = (char *)"FRE_NO_SUCH_NAME";
-		if(isOk == FRE_INVALID_OBJECT) error = (char *)"FRE_INVALID_OBJECT";
-		if(isOk == FRE_TYPE_MISMATCH) error = (char *)"FRE_TYPE_MISMATCH";
-		if(isOk == FRE_ACTIONSCRIPT_ERROR) error = (char *)"FRE_ACTIONSCRIPT_ERROR";
-		if(isOk == FRE_INVALID_ARGUMENT) error = (char *)"FRE_INVALID_ARGUMENT";
-		if(isOk == FRE_READ_ONLY) error = (char *)"FRE_READ_ONLY";
-		if(isOk == FRE_WRONG_THREAD) error = (char *)"FRE_WRONG_THREAD";
-		if(isOk == FRE_ILLEGAL_STATE) error = (char *)"FRE_ILLEGAL_STATE";
-		if(isOk == FRE_INSUFFICIENT_MEMORY) error = (char *)"FRE_INSUFFICIENT_MEMORY";
-		goto internalException;
+		if(isOk == FRE_NO_SUCH_NAME) return returnError(cx, "FRE_NO_SUCH_NAME");
+		if(isOk == FRE_INVALID_OBJECT) return returnError(cx, "FRE_INVALID_OBJECT");
+		if(isOk == FRE_TYPE_MISMATCH) return returnError(cx, "FRE_TYPE_MISMATCH");
+		if(isOk == FRE_ACTIONSCRIPT_ERROR) return returnError(cx, "FRE_ACTIONSCRIPT_ERROR");
+		if(isOk == FRE_INVALID_ARGUMENT) return returnError(cx, "FRE_INVALID_ARGUMENT");
+		if(isOk == FRE_READ_ONLY) return returnError(cx, "FRE_READ_ONLY");
+		if(isOk == FRE_WRONG_THREAD) return returnError(cx, "FRE_WRONG_THREAD");
+		if(isOk == FRE_ILLEGAL_STATE) return returnError(cx, "FRE_ILLEGAL_STATE");
+		if(isOk == FRE_INSUFFICIENT_MEMORY) return returnError(cx, "FRE_INSUFFICIENT_MEMORY");
 	}
 
 	// convert result

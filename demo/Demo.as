@@ -201,12 +201,11 @@
 				doString: function(params:Object):String { return "hello!"; },
 				doInt: function(params:Object):int { return params.hello + 42; },
 				doArray: function(params:Object):Array { return [params]; },
-				doObject: function(params:Object):Object { return {params:params}; }
+				doObject: function(params:Object):Object { return {params:params}; },
+				doThrow: function(params:Object):Object { throw "as3 error"; }
 			};
 
 			JSSpiderANE.setScriptEnvironment(envDemoObj);
-
-			try {
 
 				trace("doString: " + JSON.stringify(JSSpiderANE.evaluateScript(
 					  "callAIR('doString', {hello:77})")));
@@ -220,9 +219,18 @@
 				trace("doObject: " + JSON.stringify(JSSpiderANE.evaluateScript(
 					  "callAIR('doObject', {hello:77})")));
 
-				trace("doError: " + JSON.stringify(JSSpiderANE.evaluateScript(
-					  "callAIR('doError', {hello:77})")));
+			try {
+				trace("doError");
+				JSON.stringify(JSSpiderANE.evaluateScript(
+					  "callAIR('doError', {hello:77})"));
+			} catch(e) {
+				trace(e);
+			}
 
+			try {
+				trace("doThrow");
+				JSON.stringify(JSSpiderANE.evaluateScript(
+					  "callAIR('doThrow', {hello:77})"));
 			} catch(e) {
 				trace(e);
 			}
