@@ -195,19 +195,6 @@ DEFINE_ANE_FUNCTION(eval)
 
 	JS_CallFunction(cx, globalObj, JS_ValueToFunction(cx, stringify), 1, argvs, &rval2);
 
-	/*if(!JS_CallFunctionName(cx, &JSON.toObject(), (const char *)"stringify", 1, argvs, &rval2))
-	{
-		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_CallFunctionName failed\"}", &retVal);
-		return retVal;
-	}*/
-
-	//JS_SetProperty(cx, globalObj, (const char *)"_$", resultContainerHandle);
-
-	/*if(!JS_ExecuteScript(cx, global, preCompiledStringify, &rval2)) {
-		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_ExecuteScript failed\"}", &retVal);
-		return retVal;
-	}*/
-
 	JSString *str = rval2.toString();
 
 	// Convert result to AS3 string
@@ -272,7 +259,6 @@ void ExtensionContextInitializer(void* extData,
 	})})(callAIRI); callAIRI = undefined;";
 
 	JS_EvaluateScript(cx, _global, (const char *)script, strlen(script), nullptr, 0, &rval);
-
 }
 
 void ExtensionContextFinalizer(FREContext ctx)
