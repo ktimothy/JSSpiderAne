@@ -128,7 +128,6 @@ JSBool callAIRI(JSContext *cx, unsigned int argc, jsval *vp)
 	return JS_TRUE;
 }
 
-
 extern "C" {
 DEFINE_ANE_FUNCTION(eval)
 {
@@ -237,6 +236,15 @@ void ExtensionContextInitializer(void* extData,
 	// Precompile JSON-script:
 	JS::Value rval;
 	JS_EvaluateScript(cx, _global, (const char *)"_$={}", 5, nullptr, 0, &rval);
+
+	const char * script = "function callAIR(name, params)	{ \
+	var r = JSON.parse(callAIRI(JSON.stringify({name:name,data:params}))); \
+	if(r.error) throw r.error; \
+	return 	r.result; \
+	}";
+
+	JS_EvaluateScript(cx, _global, (const char *)script, strlen(script), nullptr, 0, &rval);
+
 	JS::HandleObject obj = HandleObject::fromMarkedLocation(&globalObj);
 	const JS::CompileOptions options(cx);
 	preCompiledStringify = JS_CompileScript(cx, obj, (const char *)"JSON.stringify(_$)", 18, options);

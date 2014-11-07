@@ -46,14 +46,6 @@ package alegorium
 				_context.addEventListener(StatusEvent.STATUS,_exceptionListener);
 			}
 
-			evaluateScript(""
-						+"function callAIR(name, params)"
-						+"{	var r = JSON.parse(	"
-						+"callAIRI(	"
-						+"JSON.stringify({name:name,data:params})));"
-						+"	if(r.error) throw r.error;"
-						+"	return 	r.result;"
-						+"}");
 			return _context;
 		}
 
