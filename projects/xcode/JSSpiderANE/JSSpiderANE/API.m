@@ -42,7 +42,6 @@ RootedObject * global = NULL;
 JSObject * globalObj = NULL;
 char buffError[4096];
 FREContext contextCache;
-JSScript * preCompiledStringify;
 
 // The error reporter callback.
 void reportError(JSContext *cx, const char *message, JSErrorReport *report) {
@@ -156,7 +155,6 @@ DEFINE_ANE_FUNCTION(eval)
 	// Create resulting object
 	JSObject * resultContainerObj = JS_NewObject(cx, NULL, NULL, NULL);
 	JS::Value resultContainerValue = OBJECT_TO_JSVAL(resultContainerObj);
-	JS::Handle<JS::Value> resultContainerHandle = HandleValue::fromMarkedLocation(&resultContainerValue);
 
 	// All ok and we have a result...
 	if(ok) {
@@ -175,12 +173,41 @@ DEFINE_ANE_FUNCTION(eval)
 	// Stringify result to JSON string
 	JS::Value rval2;
 
-	JS_SetProperty(cx, globalObj, (const char *)"_$", resultContainerHandle);
-
-	if(!JS_ExecuteScript(cx, global, preCompiledStringify, &rval2)) {
-		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_ExecuteScript failed\"}", &retVal);
+	JSObject * JSONObj = JS_NewObject(cx, NULL, NULL, NULL);
+	JS::Value JSONValue = OBJECT_TO_JSVAL(JSONObj);
+	JS::MutableHandle<JS::Value> JSON = MutableHandleValue::fromMarkedLocation(&JSONValue);
+	if(!JS_GetProperty(cx, globalObj, (const char *)"JSON", JSON))
+	{
+		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_GetProperty failed\"}", &retVal);
 		return retVal;
 	}
+
+	JSObject * stringifyObj = JS_NewObject(cx, NULL, NULL, NULL);
+	JS::Value stringifyValue = OBJECT_TO_JSVAL(stringifyObj);
+	JS::MutableHandle<JS::Value> stringify = MutableHandleValue::fromMarkedLocation(&stringifyValue);
+	if(!JS_GetProperty(cx, &JSON.toObject(), (const char *)"stringify", stringify))
+	{
+		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_GetProperty stringify failed\"}", &retVal);
+		return retVal;
+	}
+
+	JS::Value argvs[1] = { resultContainerValue };
+
+	JS_CallFunction(cx, globalObj, JS_ValueToFunction(cx, stringify), 1, argvs, &rval2);
+
+	/*if(!JS_CallFunctionName(cx, &JSON.toObject(), (const char *)"stringify", 1, argvs, &rval2))
+	{
+		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_CallFunctionName failed\"}", &retVal);
+		return retVal;
+	}*/
+
+	//JS_SetProperty(cx, globalObj, (const char *)"_$", resultContainerHandle);
+
+	/*if(!JS_ExecuteScript(cx, global, preCompiledStringify, &rval2)) {
+		FRENewObjectFromUTF8(15, (const uint8_t*)"{\"error\":\"JS_ExecuteScript failed\"}", &retVal);
+		return retVal;
+	}*/
+
 	JSString *str = rval2.toString();
 
 	// Convert result to AS3 string
@@ -235,7 +262,6 @@ void ExtensionContextInitializer(void* extData,
 
 	// Precompile JSON-script:
 	JS::Value rval;
-	JS_EvaluateScript(cx, _global, (const char *)"_$={}", 5, nullptr, 0, &rval);
 
 	const char * script = " \
 	callAIR = (function(callAIRI){ return \
@@ -247,9 +273,6 @@ void ExtensionContextInitializer(void* extData,
 
 	JS_EvaluateScript(cx, _global, (const char *)script, strlen(script), nullptr, 0, &rval);
 
-	JS::HandleObject obj = HandleObject::fromMarkedLocation(&globalObj);
-	const JS::CompileOptions options(cx);
-	preCompiledStringify = JS_CompileScript(cx, obj, (const char *)"JSON.stringify(_$)", 18, options);
 }
 
 void ExtensionContextFinalizer(FREContext ctx)
