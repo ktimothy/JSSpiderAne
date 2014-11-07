@@ -197,6 +197,9 @@
 
 			trace("Testing Environment Object:");
 
+			trace(JSON.stringify(JSSpiderANE.evaluateScript("'callAIR'+callAIR")));
+			trace(JSON.stringify(JSSpiderANE.evaluateScript("'callAIRI'+callAIRI")));
+
 			var envDemoObj:Object = {
 				doString: function(params:Object):String { return "hello!"; },
 				doInt: function(params:Object):int { return params.hello + 42; },

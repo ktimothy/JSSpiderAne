@@ -237,11 +237,13 @@ void ExtensionContextInitializer(void* extData,
 	JS::Value rval;
 	JS_EvaluateScript(cx, _global, (const char *)"_$={}", 5, nullptr, 0, &rval);
 
-	const char * script = "function callAIR(name, params)	{ \
+	const char * script = " \
+	callAIR = (function(callAIRI){ return \
+	(function(name, params)	{ \
 	var r = JSON.parse(callAIRI(JSON.stringify({name:name,data:params}))); \
 	if(r.error) throw r.error; \
 	return 	r.result; \
-	}";
+	})})(callAIRI); callAIRI = undefined;";
 
 	JS_EvaluateScript(cx, _global, (const char *)script, strlen(script), nullptr, 0, &rval);
 
