@@ -163,7 +163,7 @@ internal final class MethodHolder
 {
     public var holder:Object;
 
-    private var _result:Object;
+    private var _result:Object = { result: null, error: null };
 
     public function get run():String
     {
@@ -174,22 +174,21 @@ internal final class MethodHolder
     {
         var callInfo:Object = JSON.parse(json);
 
-        _result = { result: null, error: null };
-
         if(holder != null)
         {
             try
             {
-                _result["result"] = holder[callInfo.name](callInfo.data);
+                _result.result = holder[callInfo.name](callInfo.data);
+                _result.error = null;
             }
             catch(error:*)
             {
-                _result["error"] = String(error);
+                _result.error = String(error);
             }
         }
         else
         {
-            _result["error"] = "Script environment was not specified";
+            _result.error = "Script environment was not specified";
         }
     }
 }
