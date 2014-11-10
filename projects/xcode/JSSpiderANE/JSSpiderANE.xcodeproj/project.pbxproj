@@ -14,6 +14,7 @@
 		8437219F1A0B9295001B19FB /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8437219E1A0B9295001B19FB /* libjs_static.a */; };
 		843721A41A0B9EE3001B19FB /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 843721A31A0B9EE3001B19FB /* libjs_static.a */; };
 		843721A61A0BA401001B19FB /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 843721A51A0BA401001B19FB /* libjs_static.a */; };
+		8484A5931A1101810086DC16 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8484A5921A1101810086DC16 /* libz.1.2.5.dylib */; };
 		84905A5919FB0EB800A5260D /* API.m in Sources */ = {isa = PBXBuildFile; fileRef = 8401AEAF19FA213C00DA07B9 /* API.m */; };
 		84905A5B19FB172E00A5260D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 8401AEA819FA07BC00DA07B9 /* libz.dylib */; };
 		84905AE519FB19A200A5260D /* Anchor.h in Headers */ = {isa = PBXBuildFile; fileRef = 84905A5F19FB19A200A5260D /* Anchor.h */; };
@@ -149,7 +150,6 @@
 		84905B6719FB19A300A5260D /* Vector.h in Headers */ = {isa = PBXBuildFile; fileRef = 84905AE319FB19A200A5260D /* Vector.h */; };
 		84905B6819FB19A300A5260D /* WeakPtr.h in Headers */ = {isa = PBXBuildFile; fileRef = 84905AE419FB19A200A5260D /* WeakPtr.h */; };
 		84ADA19619F9FC3B00EA246E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84ADA19419F9FC3B00EA246E /* InfoPlist.strings */; };
-		84CEDC5E1A027B3B0008CF59 /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 84CEDC5D1A027B3B0008CF59 /* libz.1.2.5.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -179,6 +179,7 @@
 		8437219E1A0B9295001B19FB /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = "../../../Spidermonkey/js/src/build-ane-osx-x86/libjs_static.a"; sourceTree = SOURCE_ROOT; };
 		843721A31A0B9EE3001B19FB /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = "../../../Spidermonkey/js/src/build-ane-ios-x86/libjs_static.a"; sourceTree = SOURCE_ROOT; };
 		843721A51A0BA401001B19FB /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libjs_static.a; path = "../../../Spidermonkey/js/src/build-ane-ios-armv7/libjs_static.a"; sourceTree = SOURCE_ROOT; };
+		8484A5921A1101810086DC16 /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libz.1.2.5.dylib; sourceTree = "<group>"; };
 		84905A5F19FB19A200A5260D /* Anchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Anchor.h; sourceTree = "<group>"; };
 		84905A6019FB19A200A5260D /* CallArgs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallArgs.h; sourceTree = "<group>"; };
 		84905A6119FB19A200A5260D /* CallNonGenericMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CallNonGenericMethod.h; sourceTree = "<group>"; };
@@ -326,7 +327,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84CEDC5E1A027B3B0008CF59 /* libz.1.2.5.dylib in Frameworks */,
+				8484A5931A1101810086DC16 /* libz.1.2.5.dylib in Frameworks */,
 				843721A41A0B9EE3001B19FB /* libjs_static.a in Frameworks */,
 				843721A61A0BA401001B19FB /* libjs_static.a in Frameworks */,
 			);
@@ -399,6 +400,15 @@
 				843721A51A0BA401001B19FB /* libjs_static.a */,
 			);
 			name = iOS32;
+			sourceTree = "<group>";
+		};
+		8484A5941A1101880086DC16 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				843721A11A0B9632001B19FB /* iOS32Sim */,
+				843721A21A0B9639001B19FB /* iOS32 */,
+			);
+			name = iOS;
 			sourceTree = "<group>";
 		};
 		84905A5E19FB19A200A5260D /* js */ = {
@@ -554,8 +564,8 @@
 		84ADA17E19F9FC3B00EA246E = {
 			isa = PBXGroup;
 			children = (
-				843721A21A0B9639001B19FB /* iOS32 */,
-				843721A11A0B9632001B19FB /* iOS32Sim */,
+				8484A5941A1101880086DC16 /* iOS */,
+				8484A5921A1101810086DC16 /* libz.1.2.5.dylib */,
 				843721A01A0B962A001B19FB /* Mac32 */,
 				8401AD9819FA00A300DA07B9 /* jsapi */,
 				84ADA19119F9FC3B00EA246E /* JSSpiderANE */,
