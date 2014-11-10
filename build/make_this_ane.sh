@@ -46,8 +46,9 @@ mkdir -p temp/ios/armv7
 
 mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a ./temp/ios/x86/JSSpiderANE386.a
 mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a ./temp/ios/armv7/JSSpiderANE.a
-mv -f ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework ./temp/mac/JSSpiderANE.framework
 
+cp -rf ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework ./temp/mac/JSSpiderANE.framework
+rm -rf ./temp/mac/JSSpiderANE.framework/Versions/
 # android:
 mkdir -p temp/android/libs/armeabi-v7a
 mkdir -p temp/android/libs/x86
@@ -111,7 +112,6 @@ mv $ANENAME.ane ../../ane/
 [[ -f "$ANENAME.swc" ]] && rm -f "$ANENAME.swc"
 cd ..
 
-mv -f ./temp/mac/JSSpiderANE.framework ../projects/xcode/JSSpiderANE/Build/Products/Release/JSSpiderANE.framework
 mv -f ./temp/ios/x86/JSSpiderANE386.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphonesimulator/libJSSpideriOS.a
 mv -f ./temp/ios/armv7/JSSpiderANE.a ../projects/xcode/JSSpiderANE/Build/Products/Release-iphoneos/libJSSpideriOS.a
 rm -rf temp
