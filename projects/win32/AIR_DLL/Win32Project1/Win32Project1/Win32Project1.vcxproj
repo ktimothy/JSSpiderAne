@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{2FA14D9C-B256-4CBF-9924-8EE1515FB831}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Win32Project</RootNamespace>
+    <ProjectName>Win32Project</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;WIN32PROJECT1_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;WIN32PROJECT1_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>libmozjs-28.lib;FlashRuntimeExtensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="FlashRuntimeExtensions.h" />
+    <ClInclude Include="jsapi\jsalloc.h" />
+    <ClInclude Include="jsapi\jsapi.h" />
+    <ClInclude Include="jsapi\jsprototypes.h" />
+    <ClInclude Include="jsapi\jspubtd.h" />
+    <ClInclude Include="jsapi\jstypes.h" />
+    <ClInclude Include="jsapi\js\Anchor.h" />
+    <ClInclude Include="jsapi\js\CallArgs.h" />
+    <ClInclude Include="jsapi\js\CallNonGenericMethod.h" />
+    <ClInclude Include="jsapi\js\CharacterEncoding.h" />
+    <ClInclude Include="jsapi\js\Class.h" />
+    <ClInclude Include="jsapi\js\Date.h" />
+    <ClInclude Include="jsapi\js\GCAPI.h" />
+    <ClInclude Include="jsapi\js\HashTable.h" />
+    <ClInclude Include="jsapi\js\HeapAPI.h" />
+    <ClInclude Include="jsapi\js\Id.h" />
+    <ClInclude Include="jsapi\js\js-config.h" />
+    <ClInclude Include="jsapi\js\jscpucfg.h" />
+    <ClInclude Include="jsapi\js\jstypes.h" />
+    <ClInclude Include="jsapi\js\jsversion.h" />
+    <ClInclude Include="jsapi\js\LegacyIntTypes.h" />
+    <ClInclude Include="jsapi\js\MemoryMetrics.h" />
+    <ClInclude Include="jsapi\js\mozilla\Alignment.h" />
+    <ClInclude Include="jsapi\js\mozilla\AllocPolicy.h" />
+    <ClInclude Include="jsapi\js\mozilla\Array.h" />
+    <ClInclude Include="jsapi\js\mozilla\ArrayUtils.h" />
+    <ClInclude Include="jsapi\js\mozilla\Assertions.h" />
+    <ClInclude Include="jsapi\js\mozilla\Atomics.h" />
+    <ClInclude Include="jsapi\js\mozilla\Attributes.h" />
+    <ClInclude Include="jsapi\js\mozilla\BloomFilter.h" />
+    <ClInclude Include="jsapi\js\mozilla\Casting.h" />
+    <ClInclude Include="jsapi\js\mozilla\Char16.h" />
+    <ClInclude Include="jsapi\js\mozilla\CheckedInt.h" />
+    <ClInclude Include="jsapi\js\mozilla\Compiler.h" />
+    <ClInclude Include="jsapi\js\mozilla\Compression.h" />
+    <ClInclude Include="jsapi\js\mozilla\Constants.h" />
+    <ClInclude Include="jsapi\js\mozilla\DebugOnly.h" />
+    <ClInclude Include="jsapi\js\mozilla\Endian.h" />
+    <ClInclude Include="jsapi\js\mozilla\EnumSet.h" />
+    <ClInclude Include="jsapi\js\mozilla\FloatingPoint.h" />
+    <ClInclude Include="jsapi\js\mozilla\GuardObjects.h" />
+    <ClInclude Include="jsapi\js\mozilla\HashFunctions.h" />
+    <ClInclude Include="jsapi\js\mozilla\IntegerPrintfMacros.h" />
+    <ClInclude Include="jsapi\js\mozilla\Likely.h" />
+    <ClInclude Include="jsapi\js\mozilla\LinkedList.h" />
+    <ClInclude Include="jsapi\js\mozilla\lz4.h" />
+    <ClInclude Include="jsapi\js\mozilla\lz4_encoder.h" />
+    <ClInclude Include="jsapi\js\mozilla\MathAlgorithms.h" />
+    <ClInclude Include="jsapi\js\mozilla\Maybe.h" />
+    <ClInclude Include="jsapi\js\mozilla\MemoryChecking.h" />
+    <ClInclude Include="jsapi\js\mozilla\MemoryReporting.h" />
+    <ClInclude Include="jsapi\js\mozilla\Move.h" />
+    <ClInclude Include="jsapi\js\mozilla\MSIntTypes.h" />
+    <ClInclude Include="jsapi\js\mozilla\NullPtr.h" />
+    <ClInclude Include="jsapi\js\mozilla\NumericLimits.h" />
+    <ClInclude Include="jsapi\js\mozilla\PodOperations.h" />
+    <ClInclude Include="jsapi\js\mozilla\Poison.h" />
+    <ClInclude Include="jsapi\js\mozilla\Range.h" />
+    <ClInclude Include="jsapi\js\mozilla\RangedPtr.h" />
+    <ClInclude Include="jsapi\js\mozilla\ReentrancyGuard.h" />
+    <ClInclude Include="jsapi\js\mozilla\RefPtr.h" />
+    <ClInclude Include="jsapi\js\mozilla\RollingMean.h" />
+    <ClInclude Include="jsapi\js\mozilla\Scoped.h" />
+    <ClInclude Include="jsapi\js\mozilla\SHA1.h" />
+    <ClInclude Include="jsapi\js\mozilla\SplayTree.h" />
+    <ClInclude Include="jsapi\js\mozilla\TemplateLib.h" />
+    <ClInclude Include="jsapi\js\mozilla\ThreadLocal.h" />
+    <ClInclude Include="jsapi\js\mozilla\TypedEnum.h" />
+    <ClInclude Include="jsapi\js\mozilla\Types.h" />
+    <ClInclude Include="jsapi\js\mozilla\TypeTraits.h" />
+    <ClInclude Include="jsapi\js\mozilla\Vector.h" />
+    <ClInclude Include="jsapi\js\mozilla\WeakPtr.h" />
+    <ClInclude Include="jsapi\js\OldDebugAPI.h" />
+    <ClInclude Include="jsapi\js\ProfilingStack.h" />
+    <ClInclude Include="jsapi\js\PropertyKey.h" />
+    <ClInclude Include="jsapi\js\RequiredDefines.h" />
+    <ClInclude Include="jsapi\js\RootingAPI.h" />
+    <ClInclude Include="jsapi\js\SliceBudget.h" />
+    <ClInclude Include="jsapi\js\StructuredClone.h" />
+    <ClInclude Include="jsapi\js\Tracer.h" />
+    <ClInclude Include="jsapi\js\TypeDecls.h" />
+    <ClInclude Include="jsapi\js\Utility.h" />
+    <ClInclude Include="jsapi\js\Value.h" />
+    <ClInclude Include="jsapi\js\Vector.h" />
+    <ClInclude Include="jsapi\mozilla\Alignment.h" />
+    <ClInclude Include="jsapi\mozilla\AllocPolicy.h" />
+    <ClInclude Include="jsapi\mozilla\Array.h" />
+    <ClInclude Include="jsapi\mozilla\ArrayUtils.h" />
+    <ClInclude Include="jsapi\mozilla\Assertions.h" />
+    <ClInclude Include="jsapi\mozilla\Atomics.h" />
+    <ClInclude Include="jsapi\mozilla\Attributes.h" />
+    <ClInclude Include="jsapi\mozilla\BloomFilter.h" />
+    <ClInclude Include="jsapi\mozilla\Casting.h" />
+    <ClInclude Include="jsapi\mozilla\Char16.h" />
+    <ClInclude Include="jsapi\mozilla\CheckedInt.h" />
+    <ClInclude Include="jsapi\mozilla\Compiler.h" />
+    <ClInclude Include="jsapi\mozilla\Compression.h" />
+    <ClInclude Include="jsapi\mozilla\Constants.h" />
+    <ClInclude Include="jsapi\mozilla\DebugOnly.h" />
+    <ClInclude Include="jsapi\mozilla\Endian.h" />
+    <ClInclude Include="jsapi\mozilla\EnumSet.h" />
+    <ClInclude Include="jsapi\mozilla\FloatingPoint.h" />
+    <ClInclude Include="jsapi\mozilla\GuardObjects.h" />
+    <ClInclude Include="jsapi\mozilla\HashFunctions.h" />
+    <ClInclude Include="jsapi\mozilla\IntegerPrintfMacros.h" />
+    <ClInclude Include="jsapi\mozilla\Likely.h" />
+    <ClInclude Include="jsapi\mozilla\LinkedList.h" />
+    <ClInclude Include="jsapi\mozilla\lz4.h" />
+    <ClInclude Include="jsapi\mozilla\lz4_encoder.h" />
+    <ClInclude Include="jsapi\mozilla\MathAlgorithms.h" />
+    <ClInclude Include="jsapi\mozilla\Maybe.h" />
+    <ClInclude Include="jsapi\mozilla\MemoryChecking.h" />
+    <ClInclude Include="jsapi\mozilla\MemoryReporting.h" />
+    <ClInclude Include="jsapi\mozilla\Move.h" />
+    <ClInclude Include="jsapi\mozilla\MSIntTypes.h" />
+    <ClInclude Include="jsapi\mozilla\NullPtr.h" />
+    <ClInclude Include="jsapi\mozilla\NumericLimits.h" />
+    <ClInclude Include="jsapi\mozilla\PodOperations.h" />
+    <ClInclude Include="jsapi\mozilla\Poison.h" />
+    <ClInclude Include="jsapi\mozilla\Range.h" />
+    <ClInclude Include="jsapi\mozilla\RangedPtr.h" />
+    <ClInclude Include="jsapi\mozilla\ReentrancyGuard.h" />
+    <ClInclude Include="jsapi\mozilla\RefPtr.h" />
+    <ClInclude Include="jsapi\mozilla\RollingMean.h" />
+    <ClInclude Include="jsapi\mozilla\Scoped.h" />
+    <ClInclude Include="jsapi\mozilla\SHA1.h" />
+    <ClInclude Include="jsapi\mozilla\SplayTree.h" />
+    <ClInclude Include="jsapi\mozilla\TemplateLib.h" />
+    <ClInclude Include="jsapi\mozilla\ThreadLocal.h" />
+    <ClInclude Include="jsapi\mozilla\TypedEnum.h" />
+    <ClInclude Include="jsapi\mozilla\Types.h" />
+    <ClInclude Include="jsapi\mozilla\TypeTraits.h" />
+    <ClInclude Include="jsapi\mozilla\Vector.h" />
+    <ClInclude Include="jsapi\mozilla\WeakPtr.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Win32Project1.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </PrecompiledHeader>
+      <CompileAsManaged Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</CompileAsManaged>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Win32Project1.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

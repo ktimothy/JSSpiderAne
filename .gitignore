@@ -56,6 +56,15 @@ projects/android/so_arm/jni/libjs_staticARM7.a
 
 projects/android/so_x86/jni/libjs_static.a
 
-projects/win32/*
+projects/win32/etc
+projects/win32/AIR_DLL/Win32Project1/ipch
 
 projects/xcode/JSSpiderANE/JSSpiderANE.xcodeproj/project.xcworkspace/xcuserdata/admin.xcuserdatad/UserInterfaceState.xcuserstate
+
+projects/win32/AIR_DLL/Win32Project1/Win32Project1/Release/
+
+projects/win32/AIR_DLL/Win32Project1/Release/Win32Project.exp
+
+projects/win32/AIR_DLL/Win32Project1/Release/Win32Project.pdb
+
+projects/win32/AIR_DLL/Win32Project1/Win32Project1.sdf
