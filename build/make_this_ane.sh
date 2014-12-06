@@ -53,6 +53,11 @@ rm -rf ./temp/mac/JSSpiderANE.framework/Versions/
 mkdir -p temp/android/libs/armeabi-v7a
 mkdir -p temp/android/libs/x86
 
+# win32:
+mkdir -p temp/win32
+cp -f ../projects/win32/AIR_DLL/Win32Project1/Release/Win32Project.dll ./temp/win32/JSSpiderANE.dll
+cp -f ../projects/win32/AIR_DLL/Win32Project1/Win32Project1/mozjs-28.dll ./temp/win32/mozjs-28.dll
+
 cp "../projects/android/so_arm/libs/armeabi-v7a/libjs_staticARM7.so" temp/android/libs/armeabi-v7a/libalegorium.ane.$REPLACE.so
 cp "../projects/android/so_x86/libs/x86/libjs_static.so" temp/android/libs/x86/libalegorium.ane.$REPLACE.so
 
@@ -88,6 +93,7 @@ cp -rf "library.swf" "ios/x86/library.swf"
 cp -rf "library.swf" "ios/armv7/library.swf"
 cp -rf "library.swf" "android/libs/armeabi-v7a/library.swf"
 cp -rf "library.swf" "android/libs/x86/library.swf"
+cp -rf "library.swf" "win32/library.swf"
 
 echo "GENERATING ANE"
 
@@ -100,7 +106,10 @@ echo "GENERATING ANE"
 # Mac & iOS & iOS Sim
 #$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform iPhone-x86 -C ./ios/ . -platform iPhone-ARM -C ./ios/ . -platformoptions platformoptions.xml
 #Mac & iOS & iOS Sim & Android
-$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform Android-ARM -C ./android/libs/armeabi-v7a . -platform Android-x86 -C ./android/libs/x86 . -platform iPhone-x86 -C ./ios/x86/ . -platform iPhone-ARM -C ./ios/armv7/ . -platformoptions platformoptions.xml
+#$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform MacOS-x86 -C ./mac . -platform Android-ARM -C ./android/libs/armeabi-v7a . -platform Android-x86 -C ./android/libs/x86 . -platform iPhone-x86 -C ./ios/x86/ . -platform iPhone-ARM -C ./ios/armv7/ . -platformoptions platformoptions.xml
+
+#Mac & iOS & iOS Sim & Android & Win32
+$ADT -package -target ane $ANENAME.ane extension.xml -swc $ANENAME.swc -platform default library.swf -platform Windows-x86 -C ./win32 . -platform MacOS-x86 -C ./mac . -platform Android-ARM -C ./android/libs/armeabi-v7a . -platform Android-x86 -C ./android/libs/x86 . -platform iPhone-x86 -C ./ios/x86/ . -platform iPhone-ARM -C ./ios/armv7/ . -platformoptions platformoptions.xml
 
 
 sleep 0

@@ -7,6 +7,6 @@ CD=$DIR
 cd $CD
 #echo "CD: $CD"
 
-
+echo "Windows builds are done in Visual Studio"
 
 echo "Done win32!"
