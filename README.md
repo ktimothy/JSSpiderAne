@@ -26,6 +26,7 @@ Supported Platforms
 =====
 
 - Mac 32bit
+- Win 32bit
 - iOS 6+7+8 32bit
 - iOS Sim 32bit
 - Android ARMv7
