@@ -3,7 +3,7 @@ SpiderMonkey-AIR-ANE
 
 Javascript for Adobe AIR. Also, please **read this README**!
 
-State: *Alpha. Keep calm and wait for updates*
+State: *Beta. Keep calm and wait for updates*
 =====
 
 This Open-Source project is funded personally by [Denis Novozhilov](https://github.com/gloomybrain).
